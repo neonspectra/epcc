@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Dispatcher;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -142,7 +145,7 @@ Route::prefix('quaternary-choice')->group(function () {
 // This handles pretty much every API request
 // TODO:  Split this to the dispatch routes
 // TODO:  Convert this to using request instead of $_POST
-Route::post('/dispatcher', 'Dispatcher@process');
+Route::post('/dispatcher', [Dispatcher::class, 'process']);
 
 //All the routes to get and set data
 //These were all originally in dispatcher.php

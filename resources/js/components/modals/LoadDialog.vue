@@ -35,7 +35,7 @@
                     <button type="submit" class="popupInnerButton">
                         Load
                     </button>
-                    <button type="button" class="closeButton popupInnerButton" :href="'#' + id" uk-toggle>
+                    <button type="button" class="closeButton popupInnerButton" :uk-toggle="'target: #' + id">
                         Cancel
                     </button>
                 </form>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import urls from "../../urls";
 
     export default {
@@ -66,7 +67,9 @@
             toggled: function (event) {
                 //This is run before uk-open is applied, so the absence means shown
                 if(!this.$el.classList.contains('uk-open')) {
-                    this.$ga.page('/load');
+                    if (this.$ga && this.$ga.page) {
+                        this.$ga.page('/load');
+                    }
                 }
             },
             loadCharacter: function (event) {
@@ -77,8 +80,10 @@
                     return
                 }
                 let me = this;
-                startLoading();
-                readJsonFile(this.file)
+                if (window.startLoading) {
+                    window.startLoading();
+                }
+                window.readJsonFile(this.file)
                     .then(json => {
                         axios.post(urls.load, {
                             'file': json,
@@ -88,14 +93,22 @@
                             'creditsEarned': me.creditsEarned,
                         })
                             .then(response => {
-                                endLoading();
-                                this.$ga.event('character', 'load', 'success');
+                                if (window.endLoading) {
+                                    window.endLoading();
+                                }
+                                if (this.$ga && this.$ga.event) {
+                                    this.$ga.event('character', 'load', 'success');
+                                }
                                 //TODO:  Don't reload, just close everything and update as appropriate on load finishing
                                 location.reload();
                             })
                             .catch(error => {
-                                endLoading();
-                                this.$ga.event('character', 'load', 'failure');
+                                if (window.endLoading) {
+                                    window.endLoading();
+                                }
+                                if (this.$ga && this.$ga.event) {
+                                    this.$ga.event('character', 'load', 'failure');
+                                }
                                 console.log('Error Loading Character');
                                 console.log(error);
                                 if (error.response){
@@ -103,8 +116,12 @@
                                 }
                             });
                     }).catch(error => {
-                        endLoading();
-                    this.$ga.event('character', 'load', 'badFile');
+                        if (window.endLoading) {
+                            window.endLoading();
+                        }
+                    if (this.$ga && this.$ga.event) {
+                        this.$ga.event('character', 'load', 'badFile');
+                    }
                         alert(error.message);
                 });
             }

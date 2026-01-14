@@ -11,26 +11,13 @@ require('uikit');
 require('./background').init();
 
 //Vue and associated pieces
-const Vue = require('vue');
-const Vuex = require('vuex');
-const VueRouter = require('vue-router').default;
-import VueAnalytics from 'vue-analytics';
-
-Vue.use(Vuex);
-Vue.use(VueRouter);
+import { createApp, h } from 'vue';
+import { createStore } from 'vuex';
+import { createRouter, createWebHistory, RouterView } from 'vue-router';
+import VueGtag from 'vue-gtag-next';
 
 //Modals
-Vue.component('about', require('./components/modals/About').default);
-Vue.component('validation', require('./components/modals/ValidationCheck').default);
-Vue.component('load-dialog', require('./components/modals/LoadDialog').default);
-Vue.component('new-character-modal', require('./components/modals/NewCharacterModal').default);
-
-
-Vue.component('points-tracker', require('./components/PointsTracker').default);
-Vue.component('panel-one', require('./components/PanelOne').default);
-Vue.component('main-menu', require('./components/MainMenu').default);
-
-const store = new Vuex.Store({
+const store = createStore({
     modules: {
         highLevel: require('./store/modules/highLevelCreator').default,
         character: require('./store/modules/character').default,
@@ -45,8 +32,8 @@ const store = new Vuex.Store({
     },
 });
 
-const router = new VueRouter({
-    mode: 'history',
+const router = createRouter({
+    history: createWebHistory(),
     routes: [
         {
             path: '/',
@@ -61,15 +48,29 @@ const router = new VueRouter({
     ],
 });
 
-Vue.use(VueAnalytics, {
-    //If the variable isn't set dynamically, try the compiled in version.  If that fails, then fall back to a safe default.
-    id: window.env.MIX_GOOGLE_ANALYTICS_ID || process.env.MIX_GOOGLE_ANALYTICS_ID,
-    // debug: {
-    //     enabled: true,
-    //     sendHitTask: false,
-    // },
-    router,
+const app = createApp({
+    render: () => h(RouterView),
 });
+
+app.component('about', require('./components/modals/About').default);
+app.component('validation', require('./components/modals/ValidationCheck').default);
+app.component('load-dialog', require('./components/modals/LoadDialog').default);
+app.component('new-character-modal', require('./components/modals/NewCharacterModal').default);
+app.component('points-tracker', require('./components/PointsTracker').default);
+app.component('panel-one', require('./components/PanelOne').default);
+app.component('main-menu', require('./components/MainMenu').default);
+
+app.use(store);
+app.use(router);
+
+const analyticsId = window.env && window.env.VITE_GOOGLE_ANALYTICS_ID;
+if (analyticsId) {
+    app.use(VueGtag, {
+        property: {
+            id: analyticsId,
+        },
+    }, router);
+}
 
 //Do an initial check on the creator during the first page load
 //This must be done here, so we can wait for the asynchronous call to complete before finishing routing
@@ -104,8 +105,4 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
-window.app = new Vue({
-    el: '#container',
-    store,
-    router,
-});
+window.app = app.mount('#container');

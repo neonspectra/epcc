@@ -189,6 +189,7 @@ class EPCharacterCreator implements Savable
 		
         $savePack['versionName'] = config('epcc.versionName');
         $savePack['versionNumber'] = config('epcc.versionNumber');
+        $savePack['versionCommit'] = config('epcc.displayCommit');
                 
         $savePack['initialCreationPoints'] = $this->initialCreationPoints;
 		$savePack['aptitudePoints'] = $this->aptitudePoints;

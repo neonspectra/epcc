@@ -2,24 +2,24 @@
 @import "https://fonts.googleapis.com/css?family=Lato:400,700,400italic";
 
 //Browser CSS normalization
-@import "~normalize.css";
+@import "normalize.css";
 
 //Jquery UI
-@import "~jquery-ui/themes/base/all.css";
+@import "jquery-ui/themes/base/all.css";
 
 //Vegas (Background slideshow)
-@import '~vegas/src/sass/vegas';
+@import "vegas/src/sass/vegas";
 
 //UiKit
 /////////////////////////////////////
 // 1. Your custom variables and variable overwrites.
 
 // 2. Import default variables and available mixins.
-@import "~uikit/src/scss/variables-theme.scss";
-@import "~uikit/src/scss/mixins-theme.scss";
+@import "uikit/src/scss/variables-theme.scss";
+@import "uikit/src/scss/mixins-theme.scss";
 
 // 3. Your custom mixin overwrites.
 
 // 4. Import UIkit.
-@import "~uikit/src/scss/uikit-theme.scss";
+@import "uikit/src/scss/uikit-theme.scss";
 /////////////////////////////////////

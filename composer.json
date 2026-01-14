@@ -38,16 +38,17 @@
   ],
   "readme": "README.md",
   "require": {
-    "php": ">=7.2",
+    "php": "^8.2",
     "ext-json": "*",
     "ext-pdo": "*",
     "ext-curl": "*",
     "ext-fileinfo": "*",
-    "doctrine/dbal": "^2.9",
-    "fideloper/proxy": "^4.1",
-    "laravel/framework": "6.20.*",
-    "laravel/tinker": "^1.0",
-    "sentry/sentry-laravel": "^2.8",
+    "ext-dom": "*",
+    "ext-tokenizer": "*",
+    "doctrine/dbal": "^3.7",
+    "laravel/framework": "^12.0",
+    "laravel/tinker": "^2.9",
+    "sentry/sentry-laravel": "^4.0",
     "setasign/fpdf": "1.8.2"
   },
   "autoload": {
@@ -61,15 +62,11 @@
     "files": ["app/Creator/HelperFunctions.php"]
   },
   "require-dev": {
-    "beyondcode/laravel-dump-server": "^1.0",
-    "barryvdh/laravel-ide-helper": "^2.6",
-    "filp/whoops": "^2.3",
-    "fzaninotto/faker": "^1.8",
-    "mockery/mockery": "^1.2",
-    "nunomaduro/collision": "^3.0",
-    "phpunit/phpunit": "^8.1",
-    "rskuipers/php-assumptions": "^0.8.0",
-    "sebastian/phpcpd": "^4.1"
+    "barryvdh/laravel-ide-helper": "^3.0",
+    "fakerphp/faker": "^1.24",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.6",
+    "phpunit/phpunit": "^11.0"
   },
   "autoload-dev": {
     "psr-4": {
@@ -94,9 +91,7 @@
       "@php artisan package:discover --ansi"
     ],
     "post-update-cmd": [
-      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "php artisan ide-helper:generate",
-      "php artisan ide-helper:meta"
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate"
     ]
   },
   "config": {

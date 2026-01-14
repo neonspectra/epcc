@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\HighLevelCreatorController;
+use Illuminate\Support\Facades\Route;
+
 use Illuminate\Http\Request;
 
 /*
@@ -15,21 +19,22 @@ use Illuminate\Http\Request;
 
 Route::get('/version', function() {
     return [
-        'version'     => config('epcc.versionNumber'),
-        'versionName' => config('epcc.versionName'),
-        'releaseDate' => config('epcc.releaseDate')->format('F Y'),
+        'version'     => config('epcc.displayVersion'),
+        'versionName' => config('epcc.displayVersionName'),
+        'releaseDate' => config('epcc.displayReleaseDate') ?: config('epcc.releaseDate')->format('F Y'),
+        'commit'      => config('epcc.displayCommit'),
 //            Use this once Laravel allows Carbon 2: 'releaseDate' => config('epcc.releaseDate')->isoFormat('MMMM G')
         'versionNumberMin' => config('epcc.versionNumberMin'),
     ];
 });
 
 Route::prefix('creator')->group(function () {
-    Route::get('/', 'HighLevelCreatorController@get');
-    Route::post('/', 'HighLevelCreatorController@store');
-    Route::get('/validate', 'HighLevelCreatorController@validateCharacter');
-    Route::get('/save', 'HighLevelCreatorController@save');
-    Route::post('/load', 'HighLevelCreatorController@update');
+    Route::get('/', [HighLevelCreatorController::class, 'get']);
+    Route::post('/', [HighLevelCreatorController::class, 'store']);
+    Route::get('/validate', [HighLevelCreatorController::class, 'validateCharacter']);
+    Route::get('/save', [HighLevelCreatorController::class, 'save']);
+    Route::post('/load', [HighLevelCreatorController::class, 'update']);
 });
 Route::prefix('character')->group(function () {
-    Route::get('', 'CharacterController@get');
+    Route::get('', [CharacterController::class, 'get']);
 });

@@ -6,11 +6,15 @@ use Carbon\Carbon as Carbon;
 //TODO:  Some of the settings here probably belong somewhere else, like app
 //TODO:  Some of these should probably be loaded from the .env file
 return [
-    'versionName' => "Gate Jump",
+    'versionName' => env('EPCC_VERSION_NAME', "NIGHTLY"),
     'releaseDate' => Carbon::parse("December 2018"),
-    'versionNumber' => 1.52,
+    'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 0.91),
     'versionNumberMin' => 0.91,
-    'googleAnalyticsId' => env('MIX_GOOGLE_ANALYTICS_ID', ''),
+    'displayVersionName' => (env('EPCC_DISPLAY_VERSION_NAME') ?: (env('EPCC_VERSION_NAME') ?: "NIGHTLY")),
+    'displayVersion' => (env('EPCC_DISPLAY_VERSION') ?: (env('EPCC_VERSION_NUMBER') ?: "0.0")),
+    'displayCommit' => (env('EPCC_DISPLAY_COMMIT') ?: 'na'),
+    'displayReleaseDate' => (env('EPCC_DISPLAY_RELEASE_DATE') ?: Carbon::now()->format('Y-m-d')),
+    'googleAnalyticsId' => env('VITE_GOOGLE_ANALYTICS_ID', env('MIX_GOOGLE_ANALYTICS_ID', '')),
     //RulesValues
     'AptitudesPoint' => 105,
     'AptitudesMinValue' => 5,

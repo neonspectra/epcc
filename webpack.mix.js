@@ -1,5 +1,7 @@
 const mix = require('laravel-mix');
 
+const publicPath = 'public';
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,27 +13,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('public/')
-    .js('resources/js/app.js', 'js/app.js')
-    .extract([      //Extract these to vendor.js
-        'jquery',
-        'jquery-ui/ui/widgets/tooltip',
-        'vue',
-        'vue-router',
-        'vuex',
-        'vue-analytics',
-        'uikit'
-        // 'vegas', //Causes Errors if here!
-    ])
+mix.setPublicPath(publicPath)
+    .js('resources/js/app.js', 'js')
+    .vue({ version: 3 })
     .scripts('resources/js/legacy/*', 'public/js/legacy.js') //Combine all the legacy files into one
     .sass('resources/sass/app.scss', 'css')
     .sass('resources/sass/vendor.scss', 'css')
     .options({
+        processCssUrls: false,
         postCss: [
             //This lets us use @import on urls
-            require('postcss-import-url')({
-                modernBrowser: true
-            }),
+            require('postcss-import')(),
             require('postcss-url')([
                 //Preprocessing so we accurately grab url('~packageName/...')
                 {
@@ -50,7 +42,7 @@ mix.setPublicPath('public/')
                     url: 'inline',
                     maxSize: 10,
                     ignoreFragmentWarning: true,
-                    basePath: process.cwd() + '/' + mix.config.publicPath,
+                    basePath: process.cwd() + '/' + publicPath,
                 }
             ]),
         ]

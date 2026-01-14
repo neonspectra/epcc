@@ -5,11 +5,11 @@
                 Save
             </button>
         </a>
-        <button class="popupButton" href="#load-modal" uk-toggle>
+        <button class="popupButton" uk-toggle="target: #load-modal">
             Load
         </button>
         <load-dialog id="load-modal"></load-dialog>
-        <button class="popupButton" href="#validation-modal" uk-toggle>
+        <button class="popupButton" uk-toggle="target: #validation-modal">
             Check
         </button>
         <validation id="validation-modal"></validation>
@@ -33,11 +33,11 @@
                 </ul>
             </div>
         </div>
-        <button class="popupButton" href="#new-character-modal" uk-toggle>
+        <button class="popupButton" uk-toggle="target: #new-character-modal">
             New
         </button>
         <new-character-modal id="new-character-modal"></new-character-modal>
-        <button class="popupButton" href="#about-modal" uk-toggle>
+        <button class="popupButton" uk-toggle="target: #about-modal">
             About
         </button>
         <about id="about-modal"></about>

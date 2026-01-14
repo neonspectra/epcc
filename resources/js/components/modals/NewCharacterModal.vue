@@ -17,7 +17,7 @@
                     <button type="submit" class="popupInnerButton">
                         Begin!
                     </button>
-                    <button type="button" class="closeButton popupInnerButton" :href="'#' + id" uk-toggle>
+                    <button type="button" class="closeButton popupInnerButton" :uk-toggle="'target: #' + id">
                         Cancel
                     </button>
                 </form>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import urls from "../../urls";
 
     export default {
@@ -42,23 +43,35 @@
             toggled: function (event) {
                 //This is run before uk-open is applied, so the absence means shown
                 if(!this.$el.classList.contains('uk-open')) {
-                    this.$ga.page('/new');
+                    if (this.$ga && this.$ga.page) {
+                        this.$ga.page('/new');
+                    }
                 }
             },
             newCharacter: function (event) {
-                startLoading();
+                if (window.startLoading) {
+                    window.startLoading();
+                }
                 axios.post(urls.creator, {
                     'creationPoints': this.creationPoints,
                 })
                     .then(response => {
-                        endLoading();
-                        this.$ga.event('character', 'new', 'success');
+                        if (window.endLoading) {
+                            window.endLoading();
+                        }
+                        if (this.$ga && this.$ga.event) {
+                            this.$ga.event('character', 'new', 'success');
+                        }
                         //TODO:  Don't reload, just close everything and update as appropriate on load finishing
                         location.reload();
                     })
                     .catch(error => {
-                        endLoading();
-                        this.$ga.event('character', 'new', 'failure');
+                        if (window.endLoading) {
+                            window.endLoading();
+                        }
+                        if (this.$ga && this.$ga.event) {
+                            this.$ga.event('character', 'new', 'failure');
+                        }
                         console.log('Error Creating Character');
                         console.log(error);
                         if (error.response){
