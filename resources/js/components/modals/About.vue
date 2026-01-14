@@ -6,7 +6,8 @@
             <div class="uk-text-center">
                 <h1><b><u> About</u></b></h1>
                 <p>Eclipse Phase Character Creator ({{versionName}})</p>
-                <p>Version {{version}}{{commitLabel}} ({{releaseDate}})</p>
+                <p>Version {{version}} ({{releaseDate}})</p>
+                <p>Commit {{commitLabel}}</p>
                 <p>A character creator for the <a href="http://eclipsephase.com" target="_blank">Eclipse Phase</a>
                     role-playing game.</p>
                 <p>
