@@ -15,7 +15,7 @@ The Eclipse Phase Character Creator credits its existence to many people who hav
     * stoogoff                          [9 Commits in 2015]
     * mace666                           [Commit c33003b in 2016]
 
-#Authors Pre Version Control (2013-2014):
+# Authors Pre Version Control (2013-2014):
     * CÉDRIC REINHARDT (GUI, CODE, SQL)
     * JIGÉ PONT (CODE, GAME MECHANICS)
     * OLIVIER MURITH (GRAPHIC CONCEPT)
