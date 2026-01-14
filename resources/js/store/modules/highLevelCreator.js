@@ -1,3 +1,4 @@
+import axios from 'axios';
 import urls from "../../urls";
 
 export default {
@@ -58,7 +59,9 @@ export default {
                             context.commit('clearAll');
                             // TODO:  This relies on the Global "app"
                             // This is here because it triggers even if the route did not change
-                            app.$router.push({name: 'welcome'});
+                            if (window.app && window.app.$router) {
+                                window.app.$router.push({name: 'welcome'});
+                            }
                             resolve(context);
                             return;
                         }
