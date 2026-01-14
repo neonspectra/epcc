@@ -2,7 +2,7 @@
 
 This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the [Eclipse Phase First Edition (1E)](https://www.drivethrurpg.com/en/product/64135/eclipse-phase-first-edition) role-playing game, because I prefer Eclipse Phase 1E over the newer Second Edition. 
 
-While I think that Posthuman Studios are a great team (support them!), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2E really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
+While I think that Posthuman Studios are a great team ([support them and buy their stuff!](https://posthuman.shop/)), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2E really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
 
 The original upstream EPCC repo is no longer maintained, so I forked it to bring it up to date (so that it can be built automatically with modern CI), make tweaks to improve it, and preserve it for those of us still playing Eclipse Phase 1E.
 
