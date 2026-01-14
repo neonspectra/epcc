@@ -18,7 +18,15 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            arch: amd64
+          - runner: ubuntu-24.04-arm64
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,13 +60,39 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm64
           provenance: false
           tags: |
-            ghcr.io/neonspectra/epcc:${{ steps.tags.outputs.pretty_tag }}
-            ghcr.io/neonspectra/epcc:latest
+            ghcr.io/neonspectra/epcc:${{ steps.tags.outputs.pretty_tag }}-${{ matrix.arch }}
+            ghcr.io/neonspectra/epcc:latest-${{ matrix.arch }}
           build-args: |
             EPCC_DISPLAY_VERSION=${{ steps.tags.outputs.version_number }}
             EPCC_DISPLAY_VERSION_NAME=${{ steps.tags.outputs.version_name }}
             EPCC_DISPLAY_COMMIT=${{ steps.tags.outputs.commit_sha }}
             EPCC_DISPLAY_RELEASE_DATE=${{ steps.tags.outputs.release_date }}
+
+  manifest:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create multi-arch tags
+        run: |
+          VERSION_NUMBER="${{ inputs.version_number }}"
+          PRETTY_TAG="v${VERSION_NUMBER}"
+          docker buildx imagetools create \
+            -t ghcr.io/neonspectra/epcc:${PRETTY_TAG} \
+            ghcr.io/neonspectra/epcc:${PRETTY_TAG}-amd64 \
+            ghcr.io/neonspectra/epcc:${PRETTY_TAG}-arm64
+          docker buildx imagetools create \
+            -t ghcr.io/neonspectra/epcc:latest \
+            ghcr.io/neonspectra/epcc:latest-amd64 \
+            ghcr.io/neonspectra/epcc:latest-arm64
