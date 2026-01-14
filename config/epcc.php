@@ -6,12 +6,12 @@ use Carbon\Carbon as Carbon;
 //TODO:  Some of the settings here probably belong somewhere else, like app
 //TODO:  Some of these should probably be loaded from the .env file
 return [
-    'versionName' => env('EPCC_VERSION_NAME', "main"),
+    'versionName' => env('EPCC_VERSION_NAME', "NIGHTLY"),
     'releaseDate' => Carbon::parse("December 2018"),
     'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 0.0),
     'versionNumberMin' => 0.91,
-    'displayVersionName' => env('EPCC_DISPLAY_VERSION_NAME', env('EPCC_VERSION_NAME', "main")),
-    'displayVersion' => env('EPCC_DISPLAY_VERSION', env('EPCC_VERSION_NUMBER', "main")),
+    'displayVersionName' => env('EPCC_DISPLAY_VERSION_NAME', env('EPCC_VERSION_NAME', "NIGHTLY")),
+    'displayVersion' => env('EPCC_DISPLAY_VERSION', env('EPCC_VERSION_NUMBER', "NIGHTLY")),
     'displayCommit' => env('EPCC_DISPLAY_COMMIT', ''),
     'displayReleaseDate' => env('EPCC_DISPLAY_RELEASE_DATE', ''),
     'googleAnalyticsId' => env('VITE_GOOGLE_ANALYTICS_ID', env('MIX_GOOGLE_ANALYTICS_ID', '')),
