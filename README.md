@@ -1,8 +1,8 @@
-# Eclipse Phase (1st Edition) Character Creator
+# EPCC – Eclipse Phase 1E Character Creator
 
-This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the Eclipse Phase 1e role-playing game. The original project is no longer maintained, so I forked it to bring it up to date (so that it can be built automatically with modern CI) and make tweaks to improve it.
+This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the [Eclipse Phase](https://eclipsephase.com/) First Edition (1E) role-playing game. The original project is no longer maintained, so I forked it to bring it up to date (so that it can be built automatically with modern CI) and make tweaks to improve it.
 
-I prefer Eclipse Phase 1st Edition over the newer edition. While I think that Posthuman Studios are a great team (support them!), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2e really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
+I prefer Eclipse Phase 1E over the newer Second Edition. While I think that Posthuman Studios are a great team (support them!), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2e really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
 
 So let's preserve this character creator, as it's still useful for those of us still playing 1st Edition!
 
