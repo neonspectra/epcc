@@ -26,8 +26,9 @@ This work uses the Laravel, Vue, and other libraries.  All of which are licensed
 
 The statement by previous maintainer Arthur Moore indicates that the work done by them is licensed under LGPL, but this is not legally feasible for two reasons:
 1. Eclipse Phase is copyright to [Posthuman Studios](https://posthumanstudios.com/), and game contents for every prior iteration of EPCC have been licensed to the community under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (or, in earlier publishings, 3.0 Unported) license. Derivatives of this tool cannot be relicensed under a different license.
-2. In practice, you cannot sublicense code contributions to open source projects under both CC and LGPL in this manner because these licenses are not compatible. LGPL is intended for use with libraries and atomic subcomponents, not individual contributions. What this means is that, legally speaking, no one can actually fork Arthur Moore's repo because his contributions and the previous iterations cannot be mutually sublicensed by a downstream fork.
-    - This fully invalidates what I presume was Arthur's intent behind making this LGPL in the first place because legally speaking this code can't technically be licensed by *anyone* anymore.
+2. In practice, you cannot sublicense code contributions to open source projects under both CC and LGPL in this manner because these licenses are not compatible. LGPL is intended for use with libraries, decomposable assets, and atomic subcomponents (not individual contributions).
+    - Downstream licensees still have to license the original work under the original CC BY-NC-SA license, so what this means is that (legally speaking) any downstream fork from [Arthur Moore's fork](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) would be beholden to the terms of both LGPL and CC-BY-NC-SA for any downstream forks. This is not possible to do, and thus the license isn't valid.
+    - This fully invalidates any reason to use a copyleft license like LGPL in the first place because this code now can't technically be licensed by *anyone* under the license as written.
 
 However, as I have no respect for copyright, I am going to choose to disregard Arthur's LGPL notice and make use of this code anyway.
 
