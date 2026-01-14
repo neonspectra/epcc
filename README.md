@@ -1,10 +1,10 @@
 # EPCC – Eclipse Phase 1E Character Creator
 
-This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the [Eclipse Phase](https://eclipsephase.com/) First Edition (1E) role-playing game. The original project is no longer maintained, so I forked it to bring it up to date (so that it can be built automatically with modern CI) and make tweaks to improve it.
+This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the [Eclipse Phase First Edition (1E)](https://www.drivethrurpg.com/en/product/64135/eclipse-phase-first-edition) role-playing game, because I prefer Eclipse Phase 1E over the newer Second Edition. 
 
-I prefer Eclipse Phase 1E over the newer Second Edition. While I think that Posthuman Studios are a great team (support them!), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2e really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
+While I think that Posthuman Studios are a great team (support them!), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2E really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
 
-So let's preserve this character creator, as it's still useful for those of us still playing 1st Edition!
+The original upstream EPCC repo is no longer maintained, so I forked it to bring it up to date (so that it can be built automatically with modern CI), make tweaks to improve it, and preserve it for those of us still playing Eclipse Phase 1E.
 
 ---
 
@@ -16,7 +16,7 @@ So let's preserve this character creator, as it's still useful for those of us s
     * (None currently)
 
 ## License
-This work is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License**.
+This work is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License**.
 
 You can read the full license description [here](https://github.com/neonspectra/epcc/blob/main/LICENSE.txt).
 
@@ -27,11 +27,11 @@ See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list 
 The current version is [N/A]!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
 
 ## EPCC Configuration
-There is a single configuration file for EPCC: [src/php/config.ini](https://github.com/EmperorArthur/ep-character-creator/blob/master/src/php/config.ini).
+There is a single configuration file for EPCC: [src/php/config.ini](src/php/config.ini).
 You will need to maintain a separate version of that file outside of this repository for your production environment.
 
 The rest of the information (Eclipse Phase content) is stored in the database. There is a full SQL dump of the database in
-[src/database/database.sql](https://github.com/EmperorArthur/ep-character-creator/blob/master/database/database.sql).
+[src/database/database.sql](src/database/database.sql).
 
 ## Running via Docker
 Docker is the recommended, and only officially supported method or running this app.
