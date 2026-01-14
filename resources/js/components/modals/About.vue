@@ -41,6 +41,8 @@
                         </a>
                         .
                     </small>
+                </p>
+                <p>
                     <small>
                         This work is a derivative work based on <a href="https://github.com/Eclipse-Phase-Unofficial/ep-character-creator">previous work by Arthur Moore and other authors</a> licensed under a
                         <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"
