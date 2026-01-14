@@ -6,10 +6,12 @@ use Carbon\Carbon as Carbon;
 //TODO:  Some of the settings here probably belong somewhere else, like app
 //TODO:  Some of these should probably be loaded from the .env file
 return [
-    'versionName' => "Gate Jump",
+    'versionName' => env('EPCC_VERSION_NAME', "Gate Jump"),
     'releaseDate' => Carbon::parse("December 2018"),
-    'versionNumber' => 1.52,
+    'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 1.52),
     'versionNumberMin' => 0.91,
+    'displayVersionName' => env('EPCC_DISPLAY_VERSION_NAME', env('EPCC_VERSION_NAME', "Gate Jump")),
+    'displayVersion' => env('EPCC_DISPLAY_VERSION', env('EPCC_VERSION_NUMBER', "1.52")),
     'googleAnalyticsId' => env('VITE_GOOGLE_ANALYTICS_ID', env('MIX_GOOGLE_ANALYTICS_ID', '')),
     //RulesValues
     'AptitudesPoint' => 105,

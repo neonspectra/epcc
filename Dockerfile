@@ -52,6 +52,12 @@ RUN touch $DB_DATABASE && \
     sed -i 's/\\n/ /g' /var/www/html/database/database.sql && \
     sqlite3 --init /var/www/html/database/database.sql $DB_DATABASE
 
+# Optional display-only version info (used by /api/version)
+ARG EPCC_DISPLAY_VERSION
+ARG EPCC_DISPLAY_VERSION_NAME
+ENV EPCC_DISPLAY_VERSION=$EPCC_DISPLAY_VERSION
+ENV EPCC_DISPLAY_VERSION_NAME=$EPCC_DISPLAY_VERSION_NAME
+
 # Set default mode to standalone
 RUN mv standalone.env .env && php artisan key:generate
 

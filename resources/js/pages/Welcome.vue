@@ -33,7 +33,7 @@
         </div>
         </div>
 
-        <p>Please submit all suggestions and bug reports to the GitHub <a href="https://github.com/Eclipse-Phase-Unofficial/ep-character-creator/issues" target="_blank">Issues</a> page.</p>
+        <p>Please submit all suggestions and bug reports to the GitHub <a href="https://github.com/neonspectra/epcc/issues" target="_blank">Issues</a> page.</p>
         <p>If your session has expired and you were still working on your character feel free to open an issue.  I have ideas on how to fix it, but have prioritized fixing major bugs and modernizing the code.</p>
 
         <h3>Mandatory EU Notice:</h3>

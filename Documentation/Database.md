@@ -1,12 +1,15 @@
 # The Database
 
-The Eclipse Phase Character Creator requries a relational database to work.
-It will work with any database that PHP has a [PDO module](https://secure.php.net/manual/en/book.pdo.php) for.
-Since, the creator never writes to the database, even NoSQL will work.
+The Eclipse Phase Character Creator requires a relational database for read-only data.
+It works with any database that PHP has a [PDO module](https://secure.php.net/manual/en/book.pdo.php) for.
+Since the creator only reads data, even NoSQL can work if it presents a PDO-compatible layer.
 
 Instructions to set up the database can be found in the [README](../README.md#Deployment) file.
+The Docker image and test suite both use the SQLite database built from `database/database.sql`.
 
-It's often convenient to use `sqlite` to test the database.  However, `MySQL` will not simply accept an `sqlite` dump file.  Some modifications are needed.
+## Using SQLite vs MySQL
+
+It's often convenient to use `sqlite` to test the database. However, `MySQL` will not simply accept an `sqlite` dump file. Some modifications are needed.
 
 First, you must delete these two lines from the top of the file:
 ```text

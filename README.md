@@ -2,9 +2,9 @@
 
 A web-based character creator application for the Eclipse Phase role-playing game.
 
-* [Source](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator)
-* [Releases](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator/releases)
-* [Issues](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator/issues)
+* [Source](https://github.com/neonspectra/epcc)
+* [Releases](https://github.com/neonspectra/epcc/releases)
+* [Issues](https://github.com/neonspectra/epcc/issues)
 * Websites that Host EPCC
     * [cd-net.net](https://epcc.cd-net.net/)
 
@@ -12,14 +12,14 @@ A web-based character creator application for the Eclipse Phase role-playing gam
 
 This work is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License**.
 
-You can read the full license description [here](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator/blob/master/LICENSE.txt).
+You can read the full license description [here](https://github.com/neonspectra/epcc/blob/main/LICENSE.txt).
 
 
 ## Authors
-See [here](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator/blob/master/Authors.md) for a list of everyone who has contributed to this project.
+See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list of everyone who has contributed to this project.
 
 ## Version
-The current version is **1.51 Gate Jump**!  See the [Changelog](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator/blob/master/CHANGELOG.md). 
+The current version is **1.52 Gate Jump**!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
 
 ## EPCC Configuration
 

@@ -1,42 +1,22 @@
 # User Interface Documentation
 
-# High Level Design
+## High Level Design (post-refactor)
 
-All UI is shown on `index.php`.
-User actions are almost all done through ajax calls.
-The sole exception to this is file loading, which is still mostly ajax, but uses an iframe to upload the user selected file.
+The UI is rendered through Laravel + Vue 3:
 
-## index.php
-`index.php` has the following features:
+- `resources/views/main.blade.php` is the entry point (formerly `index.php`).
+- Vue Router mounts into `#container` and swaps pages (`resources/js/app.js`).
+- Modals and UI components live under `resources/js/components`.
+- UIkit provides modal behavior and layout classes.
+- Most user actions are AJAX calls (Axios) to `/api/*` routes.
+- File loading reads JSON locally (`readJsonFile`) and posts to `/api/creator/load` (no iframe).
 
-* 4 vertical content panes.
-    * Each is at a minimum 20em wide (Total of 80em or ~1280px)
-    > Note that buttons **can** currently overlap text if the text is too long.
-    * 1px seperation between each pane
-    * #primary is on the far left, with #secondary to the right of it, #tertiary to the right of #secondary, and #quaternary to the right of #tertiary
-* A #messages alert box
-    * Centered at the top of the screen
-    * 25px high
-    * At least 300px wide
-    * Displays over almost everything (z-index: 100)
+## Layout notes
 
-* A #menu panel containing 7 buttons
-    * Absolute positioned:
-        * Bottom, Right of screen
-    * 100px wide
-    * 400px heigh
-    * Each button:
-        * 100px wide
-        * 55px heigh
-        * Text is left aligned
-        * Oval shaped
+- The main layout still uses 4 vertical content panes (`#primary`, `#secondary`, `#tertiary`, `#quaternary`).
+- `#messages` is a top-centered alert overlay.
+- The menu panel is positioned at the bottom-right with buttons for save/load/validate/export/new/about.
+- Stats panel remains top-right.
+- Popup modals cover most of the page for detailed actions (UIkit modals).
 
-* A stats panel
-    * Absolute positioned:
-        * Top, Right of screen
-    * 120px wide
-    * 200px heigh
-* Popup windows covering most of the page
-* Tooltips when a user hovers over a '?'
-
-Final minimal page dimensions to display everything are 1400 X 630.
+Minimal viewport size remains roughly 1400x630 for a no-scroll experience.

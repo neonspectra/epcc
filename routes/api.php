@@ -19,8 +19,8 @@ use Illuminate\Http\Request;
 
 Route::get('/version', function() {
     return [
-        'version'     => config('epcc.versionNumber'),
-        'versionName' => config('epcc.versionName'),
+        'version'     => config('epcc.displayVersion'),
+        'versionName' => config('epcc.displayVersionName'),
         'releaseDate' => config('epcc.releaseDate')->format('F Y'),
 //            Use this once Laravel allows Carbon 2: 'releaseDate' => config('epcc.releaseDate')->isoFormat('MMMM G')
         'versionNumberMin' => config('epcc.versionNumberMin'),
