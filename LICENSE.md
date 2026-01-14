@@ -1,4 +1,4 @@
-EPCC is Copyleft © 2026 [neon](https://neosynth.net/meta/contact/). Except where otherwise noted, this repo is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+EPCC is a derivative work maintained by [neon](https://neosynth.net/meta/contact/). Except where otherwise noted, the contents of this repo are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 This work is a derivative work based on [previous work by Arthur Moore and other authors](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US). Changes were made.
 
