@@ -1,7 +1,7 @@
 The Eclipse Phase Character Creator credits it's existence to many people who have been kind enough to donate their time to this project.
 
 # Authors
-    * neon @ neosynth.net [Starting in 2026]
+    * neon @ neosynth.net               [Starting in 2026]
 
 # Inactive Authors:
     * Arthur Moore (EmperorArthur)      [2015-2021]
