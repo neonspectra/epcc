@@ -1,11 +1,14 @@
 The Eclipse Phase Character Creator credits its existence to many people who have been kind enough to donate their time to this project.
 
 # Authors
-    * neon @ neosynth.net               [Starting in 2026]
+    * Neon (neon@neosynth.net)          [2026-]
 
 # Inactive Authors:
-    * Arthur Moore (EmperorArthur)      [2015-2021]
-    * Russell Bewley (rbewley4)         [2014-2021]
+(with associated GitHub username, where applicable)
+
+    * Arthur Moore (EmperorArthur)      [403 Commits from 2015 to 2021]
+    * Nick Clark (nickrbclark)          [23 Commits in 2021]
+    * Russell Bewley (rbewley4)         [34 Commits from 2014 to2017]
     * AngleOSaxon                       [Commit 63f56a in 2018]
     * Cedric Reinhardt (FullSimplex)    [16 Commits between 2014 and 2016]
     * Ian Ruotsala (boomzilla)          [Commit 2525583 in 2014]
