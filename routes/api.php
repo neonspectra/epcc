@@ -21,7 +21,8 @@ Route::get('/version', function() {
     return [
         'version'     => config('epcc.displayVersion'),
         'versionName' => config('epcc.displayVersionName'),
-        'releaseDate' => config('epcc.releaseDate')->format('F Y'),
+        'releaseDate' => config('epcc.displayReleaseDate') ?: config('epcc.releaseDate')->format('F Y'),
+        'commit'      => config('epcc.displayCommit'),
 //            Use this once Laravel allows Carbon 2: 'releaseDate' => config('epcc.releaseDate')->isoFormat('MMMM G')
         'versionNumberMin' => config('epcc.versionNumberMin'),
     ];

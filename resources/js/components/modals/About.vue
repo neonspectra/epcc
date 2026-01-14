@@ -6,7 +6,7 @@
             <div class="uk-text-center">
                 <h1><b><u> About</u></b></h1>
                 <p>Eclipse Phase Character Creator ({{versionName}})</p>
-                <p>Version {{version}} ({{releaseDate}})</p>
+                <p>Version {{version}}{{commitLabel}} ({{releaseDate}})</p>
                 <p>A character creator for the <a href="http://eclipsephase.com" target="_blank">Eclipse Phase</a>
                     role-playing game.</p>
                 <p>
@@ -57,7 +57,13 @@
             return {
                 versionName: '',
                 releaseDate: '',
-                version: 0
+                version: 0,
+                commit: ''
+            }
+        },
+        computed: {
+            commitLabel: function () {
+                return this.commit ? ` (${this.commit})` : '';
             }
         },
         methods: {
@@ -77,6 +83,7 @@
                         this.version = response.data.version;
                         this.versionName = response.data.versionName;
                         this.releaseDate = response.data.releaseDate;
+                        this.commit = response.data.commit || '';
                     })
                     .catch(error => {
                         console.log('Error getting version data');
