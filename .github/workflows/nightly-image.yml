@@ -39,6 +39,8 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/amd64,linux/arm64
+          provenance: false
           tags: |
             ghcr.io/neonspectra/epcc:nightly
             ghcr.io/neonspectra/epcc:sha-${{ steps.version.outputs.sha_short }}
