@@ -1,28 +1,32 @@
-# Eclipse Phase Character Creator
+# Eclipse Phase (1st Edition) Character Creator
 
-A web-based character creator application for the Eclipse Phase role-playing game.
+This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the Eclipse Phase 1e role-playing game. The original project is no longer maintained, so I forked it to bring it up to date (so that it can be built automatically with modern CI) and make tweaks to improve it.
 
+I prefer Eclipse Phase 1st Edition over the newer edition. While I think that Posthuman Studios are a great team (support them!), Eclipse Phase has always had a problem of not really knowing what it wants to be. Although the second edition is more streamlined, I think Eclipse Phase 2e really lost sight of its roots as a simulationist game system focused on accurately and consistently depicting the minutiae of how its hard-scifi setting works.
+
+So let's preserve this character creator, as it's still useful for those of us still playing 1st Edition!
+
+---
+
+## Contents
 * [Source](https://github.com/neonspectra/epcc)
 * [Releases](https://github.com/neonspectra/epcc/releases)
 * [Issues](https://github.com/neonspectra/epcc/issues)
 * Websites that Host EPCC
-    * [cd-net.net](https://epcc.cd-net.net/)
+    * (None currently)
 
 ## License
-
 This work is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License**.
 
 You can read the full license description [here](https://github.com/neonspectra/epcc/blob/main/LICENSE.txt).
-
 
 ## Authors
 See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list of everyone who has contributed to this project.
 
 ## Version
-The current version is **1.52 Gate Jump**!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
+The current version is [N/A]!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
 
 ## EPCC Configuration
-
 There is a single configuration file for EPCC: [src/php/config.ini](https://github.com/EmperorArthur/ep-character-creator/blob/master/src/php/config.ini).
 You will need to maintain a separate version of that file outside of this repository for your production environment.
 
@@ -30,18 +34,26 @@ The rest of the information (Eclipse Phase content) is stored in the database. T
 [src/database/database.sql](https://github.com/EmperorArthur/ep-character-creator/blob/master/database/database.sql).
 
 ## Running via Docker
-
 Docker is the recommended, and only officially supported method or running this app.
 While the setup steps below can be used for development, it is **highly recommended** that deployment be done via Docker.
 
+### Building from Source
 The following command builds an image of the applciation that is ready to be deployed. If your user is not in the `docker` group, you may need `sudo`.
 ```bash
 docker image build --tag epcc .
 ```
 
+### Obtaining from ghcr.io
+If you don't want to build your own docker image, you can pull it from this repo's GitHub Container Registry [here](https://github.com/neonspectra/epcc/pkgs/container/epcc).
 
-The official docker image can be found [here](https://hub.docker.com/r/emperorarthur/ep-character-creator/)
+#### Tags we support:
+- `ghcr.io/neonspectra/epcc:nightly` - Latest nightly (built off the latest change in `main`)
+- `ghcr.io/neonspectra/epcc:latest` - Latest stable release version
+- `ghcr.io/neonspectra/epcc:sha-XXXX` - Pin a nightly based off its SHA commit hash
+- `ghcr.io/neonspectra/epcc:vXXXXX` - Pin a specific stable release version with its version tag.
+    - *Note that we don't have any pre-fork builds of the image. Please visit the [original project](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) if you want an older image.*
 
+### Running
 In most cases the following command will allow you to test the build image locally.
 It exposes a webserver on port 8080 that you can access to view the container. You can test access locally by navigating to [http://localhost:8080](http://localhost:8080).
 ```bash
@@ -51,14 +63,6 @@ sudo docker run --rm -it -p 8080:80 --name epcc epcc
 If deploying to the internet, you may want to consider using your own '.env' file.
 Doing so allows you to change things like the error reporting location, or almost any other configuration.
 Simply add `--env-file custom.env` to the run command above.
-
-### Docker Build Notes (Updated 2026-01-14)
-The Docker build was updated to work on modern systems by:
-- Using a Node 24 build stage for Laravel Mix assets.
-- Pinning the runtime to PHP 8.4 (Laravel 12 compatible) with required PHP extensions.
-- Installing Composer directly (avoids Alpine PHP package conflicts).
-- Preparing the SQLite database during image build.
-Analytics IDs now use `VITE_GOOGLE_ANALYTICS_ID` (the old `MIX_` name still works for backward compatibility).
 
 #### Optional health check
 For troubleshooting, you can run a health check:
