@@ -31,7 +31,7 @@ There is a single configuration file for EPCC: `src/php/config.ini`.
 You will need to maintain a separate version of that file outside of this repository for your production environment.
 
 The rest of the information (Eclipse Phase content) is stored in the database. There is a full SQL dump of the database in
-[src/database/database.sql](src/database/database.sql).
+[`database/database.sql`](database/database.sql).
 
 ## Running via Docker
 Docker is the recommended, and only officially supported method or running this app.
