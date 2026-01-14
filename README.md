@@ -52,6 +52,14 @@ If deploying to the internet, you may want to consider using your own '.env' fil
 Doing so allows you to change things like the error reporting location, or almost any other configuration.
 Simply add `--env-file custom.env` to the run command above.
 
+### Docker Build Notes (Updated 2026-01-14)
+The Docker build was updated to work on modern systems by:
+- Using a Node 24 build stage for Laravel Mix assets.
+- Pinning the runtime to PHP 8.4 (Laravel 12 compatible) with required PHP extensions.
+- Installing Composer directly (avoids Alpine PHP package conflicts).
+- Preparing the SQLite database during image build.
+Analytics IDs now use `VITE_GOOGLE_ANALYTICS_ID` (the old `MIX_` name still works for backward compatibility).
+
 #### Optional health check
 For troubleshooting, you can run a health check:
 ```bash
@@ -61,7 +69,9 @@ sudo docker inspect --format='{{json .State.Health}}' epcc
 ##  Local Development and Testing
 You will need:
 
-* [php 7.2 or greater](https://php.net)
+* [php 8.4 or greater](https://php.net)
+* [node 24 LTS](https://nodejs.org/)
+* [composer 2.x](https://getcomposer.org/)
 * Either: [mySql 14.14 or greater](https://dev.mysql.com/downloads/)
 * Or: [sqlite3](https://www.sqlite.org/download.html) (Recommended)
 
@@ -87,7 +97,7 @@ You will need:
     mysql -h localhost -u epcc_www -p'$DATABASE_PASSWORD' EclipsePhaseData < database/database.sql
     ```
 3. Configure database access in your custom `.env` file.  
-See [here](https://laravel.com/docs/5.6/database#configuration) for how to do that.
+See [here](https://laravel.com/docs/12.x/database#configuration) for how to do that.
 
 ### Saving database changes
 #### SQLite:
@@ -101,3 +111,9 @@ WARNING:  If you use this feature, skip the `sed` step when creating the databas
 1. Set up the database.
 2. From a command prompt in the top level of this project run `php artisan serve`
 3. Browse to http://localhost:8080
+
+### Running the test suite (PHPUnit)
+```bash
+composer install
+vendor/bin/phpunit
+```

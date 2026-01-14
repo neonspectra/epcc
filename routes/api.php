@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\HighLevelCreatorController;
+use Illuminate\Support\Facades\Route;
+
 use Illuminate\Http\Request;
 
 /*
@@ -24,12 +28,12 @@ Route::get('/version', function() {
 });
 
 Route::prefix('creator')->group(function () {
-    Route::get('/', 'HighLevelCreatorController@get');
-    Route::post('/', 'HighLevelCreatorController@store');
-    Route::get('/validate', 'HighLevelCreatorController@validateCharacter');
-    Route::get('/save', 'HighLevelCreatorController@save');
-    Route::post('/load', 'HighLevelCreatorController@update');
+    Route::get('/', [HighLevelCreatorController::class, 'get']);
+    Route::post('/', [HighLevelCreatorController::class, 'store']);
+    Route::get('/validate', [HighLevelCreatorController::class, 'validateCharacter']);
+    Route::get('/save', [HighLevelCreatorController::class, 'save']);
+    Route::post('/load', [HighLevelCreatorController::class, 'update']);
 });
 Route::prefix('character')->group(function () {
-    Route::get('', 'CharacterController@get');
+    Route::get('', [CharacterController::class, 'get']);
 });

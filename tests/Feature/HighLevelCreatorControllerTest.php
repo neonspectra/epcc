@@ -10,13 +10,13 @@ class HighLevelCreatorControllerTest extends TestCase
     /**
      * Create a new (empty) character to run these tests against
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         session()->put('cc', new EPCharacterCreator(1000));
     }
 
-    public function saveProvider()
+    public static function saveProvider(): array
     {
         $dir   = __DIR__ . '/HighLevelCreatorController/saves/';
         $saves = [];

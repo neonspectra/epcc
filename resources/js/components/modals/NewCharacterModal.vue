@@ -17,7 +17,7 @@
                     <button type="submit" class="popupInnerButton">
                         Begin!
                     </button>
-                    <button type="button" class="closeButton popupInnerButton" :href="'#' + id" uk-toggle>
+                    <button type="button" class="closeButton popupInnerButton" :uk-toggle="'target: #' + id">
                         Cancel
                     </button>
                 </form>

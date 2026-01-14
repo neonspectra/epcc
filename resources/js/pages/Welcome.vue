@@ -12,9 +12,9 @@
         <div class="uk-flex uk-flex-around uk-flex-wrap">
         <div class="uk-card uk-card-body uk-card-default uk-width-1-3@m uk-text-center game-style">
             <h3 class="uk-card title">Choose!</h3>
-            <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" href="#new-character-modal" uk-toggle>New Character</button>
-            <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom" href="#load-modal" uk-toggle>Continue?</button>
-            <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" href="#about-modal" uk-toggle>More Information</button>
+            <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #new-character-modal">New Character</button>
+            <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #load-modal">Continue?</button>
+            <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #about-modal">More Information</button>
             <new-character-modal id="new-character-modal"></new-character-modal>
             <load-dialog id="load-modal"></load-dialog>
             <about id="about-modal"></about>

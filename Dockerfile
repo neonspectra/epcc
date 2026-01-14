@@ -1,7 +1,7 @@
 # This is meant to run a full version of the creator in standalone mode.
 # No external databases or volume mounts required.
 
-FROM node:16-alpine AS node-build
+FROM node:24-alpine AS node-build
 WORKDIR /app
 COPY package.json package-lock.json webpack.mix.js ./
 COPY resources ./resources
@@ -9,7 +9,7 @@ COPY public ./public
 RUN npm install
 RUN npm run production
 
-FROM php:7.4-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 EXPOSE 80
 CMD ["s6-svscan", "/etc/s6"]
@@ -18,8 +18,8 @@ HEALTHCHECK --interval=1m --timeout=3s \
     CMD curl -f http://localhost/ || exit 1
 
 RUN apk add --no-cache nginx sqlite s6 curl unzip git \
-    && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libxml2-dev sqlite-dev oniguruma-dev curl-dev \
-    && docker-php-ext-install pdo pdo_sqlite pdo_mysql fileinfo tokenizer dom curl mbstring \
+    && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libxml2-dev sqlite-dev oniguruma-dev curl-dev mariadb-connector-c-dev \
+    && docker-php-ext-install pdo pdo_sqlite pdo_mysql fileinfo dom curl mbstring \
     && apk del .build-deps
 
 COPY .docker/s6/ /etc/s6/
