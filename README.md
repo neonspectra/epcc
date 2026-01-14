@@ -34,37 +34,26 @@ The rest of the information (Eclipse Phase content) is stored in the database. T
 Docker is the recommended, and only officially supported method or running this app.
 While the setup steps below can be used for development, it is **highly recommended** that deployment be done via Docker.
 
-The following command builds an image of the applciation that is ready to be deployed.
+The following command builds an image of the applciation that is ready to be deployed. If your user is not in the `docker` group, you may need `sudo`.
 ```bash
 docker image build --tag epcc .
 ```
 
+
 The official docker image can be found [here](https://hub.docker.com/r/emperorarthur/ep-character-creator/)
 
 In most cases the following command will allow you to test the build image locally.
-It exposes a webserver on port 8080 that you can access to view the container.
+It exposes a webserver on port 8080 that you can access to view the container. You can test access locally by navigating to [http://localhost:8080](http://localhost:8080).
 ```bash
-docker container run --rm -it -p 8080:80 --name epcc epcc
+sudo docker run --rm -it -p 8080:80 --name epcc epcc
 ```
 
 If deploying to the internet, you may want to consider using your own '.env' file.
 Doing so allows you to change things like the error reporting location, or almost any other configuration.
 Simply add `--env-file custom.env` to the run command above.
 
-#### Build (local)
-If your user is not in the `docker` group, you may need `sudo`:
-```bash
-sudo docker build -t epcc .
-```
-
-#### Run (local)
-```bash
-sudo docker run --rm -it -p 8080:80 --name epcc epcc
-```
-
-Then browse to http://localhost:8080
-
 #### Optional health check
+For troubleshooting, you can run a health check:
 ```bash
 sudo docker inspect --format='{{json .State.Health}}' epcc
 ```
