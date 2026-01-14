@@ -35,8 +35,7 @@
 
         <p>Please submit all suggestions and bug reports to the GitHub <a href="https://github.com/neonspectra/epcc/issues" target="_blank">Issues</a> page.</p>
 
-        <p class="disclaimer"><b>Mandatory EU Notice:</b></p>
-        <p class="disclaimer">
+        <p class="disclaimer"><b>Mandatory EU Notice: </b>
             This site uses JavaScript and cookies to function.  By continuing to use this site, you consent to the following privacy policy.
             The creators of this site do not sell your data to anyone.
             This policy may be updated at any time.
