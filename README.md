@@ -27,7 +27,7 @@ See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list 
 The current version is [N/A]!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
 
 ## EPCC Configuration
-There is a single configuration file for EPCC: [src/php/config.ini](src/php/config.ini).
+There is a single configuration file for EPCC: `src/php/config.ini`.
 You will need to maintain a separate version of that file outside of this repository for your production environment.
 
 The rest of the information (Eclipse Phase content) is stored in the database. There is a full SQL dump of the database in
