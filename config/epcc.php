@@ -8,12 +8,12 @@ use Carbon\Carbon as Carbon;
 return [
     'versionName' => env('EPCC_VERSION_NAME', "NIGHTLY"),
     'releaseDate' => Carbon::parse("December 2018"),
-    'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 0.0),
+    'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 0.91),
     'versionNumberMin' => 0.91,
-    'displayVersionName' => env('EPCC_DISPLAY_VERSION_NAME', env('EPCC_VERSION_NAME', "NIGHTLY")),
-    'displayVersion' => env('EPCC_DISPLAY_VERSION', env('EPCC_VERSION_NUMBER', "NIGHTLY")),
-    'displayCommit' => env('EPCC_DISPLAY_COMMIT', ''),
-    'displayReleaseDate' => env('EPCC_DISPLAY_RELEASE_DATE', ''),
+    'displayVersionName' => (env('EPCC_DISPLAY_VERSION_NAME') ?: (env('EPCC_VERSION_NAME') ?: "NIGHTLY")),
+    'displayVersion' => (env('EPCC_DISPLAY_VERSION') ?: (env('EPCC_VERSION_NUMBER') ?: "0.0")),
+    'displayCommit' => (env('EPCC_DISPLAY_COMMIT') ?: 'na'),
+    'displayReleaseDate' => (env('EPCC_DISPLAY_RELEASE_DATE') ?: Carbon::now()->format('Y-m-d')),
     'googleAnalyticsId' => env('VITE_GOOGLE_ANALYTICS_ID', env('MIX_GOOGLE_ANALYTICS_ID', '')),
     //RulesValues
     'AptitudesPoint' => 105,

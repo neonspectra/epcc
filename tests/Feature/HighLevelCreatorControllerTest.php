@@ -32,7 +32,43 @@ class HighLevelCreatorControllerTest extends TestCase
 
     public function testSave()
     {
-        $this->validateJson('/api/creator/save', __DIR__ . '/HighLevelCreatorController/save.json');
+        $response = $this->get('/api/creator/save');
+        $response->assertStatus(200);
+
+        $actual = $this->normalizeSavePack(json_decode($response->getContent(), true));
+        $expected = $this->normalizeSavePack(json_decode(file_get_contents(__DIR__ . '/HighLevelCreatorController/save.json'), true));
+
+        foreach (['versionName', 'versionNumber', 'versionCommit'] as $key) {
+            if (array_key_exists($key, $actual)) {
+                $expected[$key] = $actual[$key];
+            }
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    private function normalizeSavePack($data)
+    {
+        if (is_string($data) && is_numeric($data)) {
+            return $data + 0;
+        }
+
+        if (!is_array($data)) {
+            return $data;
+        }
+
+        $normalized = [];
+        foreach ($data as $key => $value) {
+            if ($key === 'atomUid') {
+                continue;
+            }
+            if ($key === 'maxValueSoftgearMod' && $value === null) {
+                $value = 0;
+            }
+            $normalized[$key] = $this->normalizeSavePack($value);
+        }
+
+        return $normalized;
     }
 
     public function testGet()

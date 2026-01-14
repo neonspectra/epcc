@@ -1,6 +1,7 @@
 {
   "versionName": "NIGHTLY",
-  "versionNumber": 0,
+  "versionNumber": 0.91,
+  "versionCommit": "na",
   "initialCreationPoints": 1000,
   "aptitudePoints": 70,
   "reputationPoints": 50,
