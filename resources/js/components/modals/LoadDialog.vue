@@ -1,6 +1,6 @@
 <template>
     <div :id="id" class="uk-flex-top" v-on:toggle="toggled" uk-modal>
-        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical game-style" style="min-width: 80ch">
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical game-style epcc-modal-dialog">
             <button class="uk-modal-close-default" type="button" uk-close></button>
             <div class="uk-text-center">
                 <h1><b><u>Load Character</u></b></h1>
@@ -10,7 +10,7 @@
                     <div>
                         <label class="uk-form-label" for="creationMode">Continue in creation mode?</label>
                         <div class="uk-form-controls">
-                            <input class="uk-checkbox" type="checkbox" id="creationMode" style="margin: 0.32em; border: 2px solid black" v-model="creationMode">
+                            <input class="uk-checkbox epcc-checkbox" type="checkbox" id="creationMode" v-model="creationMode">
                         </div>
                     </div>
                     <div v-if="!creationMode">

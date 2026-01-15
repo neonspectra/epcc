@@ -33,6 +33,8 @@ This repo is a Laravel + Vue web app (Eclipse Phase Character Creator) with a Do
 
 - **Landing page + modals**  
   `resources/js/pages/Welcome.vue` → `new-character-modal`, `load-dialog`, `about`
+- **Settings + background preferences**  
+  `resources/js/components/modals/Settings.vue` stores local preferences for background images and remote images in localStorage. Clearing session calls `DELETE /api/creator/` → `HighLevelCreatorController@destroy`.
 
 - **Main workflow**
   - `POST /api/creator/` → `HighLevelCreatorController@store` creates a session-based creator.
@@ -86,6 +88,11 @@ curl -fsS http://localhost:8080/ | head -n 5
 curl -fsS http://localhost:8080/api/version
 sudo docker stop epcc_test
 ```
+
+### Settings Smoke Checks (Manual)
+1) Open Settings from Welcome or Main Menu.  
+2) Toggle background images and remote images; confirm slideshow updates or disables.  
+3) Click Clear Session; confirm redirect to welcome page.
 
 ### Export Smoke Check (inside app context)
 Exports require a creator session. Use PHP to seed it:

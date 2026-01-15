@@ -13,7 +13,7 @@ class FrontendSmokeTest extends TestCase
 
         $this->assertStringContainsString('uk-toggle="target: #new-character-modal"', $welcome);
         $this->assertStringContainsString('uk-toggle="target: #load-modal"', $welcome);
-        $this->assertStringContainsString('uk-toggle="target: #about-modal"', $welcome);
+        $this->assertStringContainsString('uk-toggle="target: #settings-modal"', $welcome);
     }
 
     public function test_main_menu_buttons_use_explicit_uikit_targets(): void
@@ -24,7 +24,7 @@ class FrontendSmokeTest extends TestCase
         $this->assertStringContainsString('uk-toggle="target: #load-modal"', $mainMenu);
         $this->assertStringContainsString('uk-toggle="target: #validation-modal"', $mainMenu);
         $this->assertStringContainsString('uk-toggle="target: #new-character-modal"', $mainMenu);
-        $this->assertStringContainsString('uk-toggle="target: #about-modal"', $mainMenu);
+        $this->assertStringContainsString('uk-toggle="target: #settings-modal"', $mainMenu);
     }
 
     public function test_new_character_modal_imports_axios_and_uses_window_helpers(): void

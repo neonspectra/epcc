@@ -1,3 +1,55 @@
+<details>
+  <summary><b>Version Nomenclature</b></summary>
+  <p>
+    Following the release of 2.00 Argonaut, EPCC now uses a consistent naming convention
+    for version numbering that prioritises inter-version character sheet compatibility:
+  </p>
+  <ul>
+    <li>
+      The EPCC version number must be a float number. It must always increase with the
+      release of new versions.
+    </li>
+    <li>
+      Any change that <strong>does</strong> impact character sheet compatibility will
+      increment the integer component (i.e., the number to the left of the decimal point)
+      of the version number.
+      <ul>
+        <li>
+          Incrementing this number will result in a new version codename assigned
+          (which may or may not be alphabetical).
+        </li>
+      </ul>
+    </li>
+    <li>
+      Any change that <strong>does not</strong> impact character sheet compatibility will
+      increment the decimal component (i.e., the number to the right of the decimal point)
+      of the version number.
+      <ul>
+        <li>
+          Generally, the minor version number has two digits, giving up to 99 versions
+          before we end up in an awkward situation if we want to keep the version a float
+          without rolling over.
+        </li>
+        <li>
+          In the event that we for some reason were to get over 99 releases in a minor
+          version, we will start incrementing to the right. For example, the next minor
+          version after <code>X.99</code> would be <code>X.991</code> and so on. I don't
+          expect this to ever happen.
+        </li>
+      </ul>
+    </li>
+  </ul>
+</details>
+
+# 2.01 Argonaut (2026-01-16)
+This release includes UI fixes as well as introduces a new dark mode (enabled by default).
+- Dark Mode 😎
+- Added a settings menu (replaces "About" menu) to include a toggle for dark mode as well as for whether to show background images.
+- Reworked landing page styling to properly fit all elements as page shifts
+- Cleaned up column wrapping to remove awkward spacing on mobile
+- Fixed mojibake database entries for some flavour texts in various gear/traits.
+- Fixed popup modals getting cut off and rendering off-screen on mobile
+
 # 2.00 Argonaut (2026-01-15)
 This release is the first EPCC release under [neonspectra/epcc](https://github.com/neonspectra/epcc). This release focuses on long-overdue plumbing updates as well as automating testing and build processes for further new releases. 
 

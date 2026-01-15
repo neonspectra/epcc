@@ -1,0 +1,228 @@
+:root {
+    --epcc-body-bg: #ffffff;
+    --epcc-text: hsl(200,10%,40%);
+    --epcc-text-strong: #000000;
+    --epcc-text-inverse: #ffffff;
+    --epcc-accent: rgb(186, 0, 80);
+    --epcc-accent-bg: rgb(186, 0, 80);
+    --epcc-surface: rgba(242, 242, 242, .8);
+    --epcc-surface-strong: rgba(242, 242, 242, .9);
+    --epcc-surface-hover: rgba(254, 254, 254, .85);
+    --epcc-surface-solid: #ffffff;
+    --epcc-surface-panel: rgba(211, 211, 211, 0.8);
+    --epcc-surface-muted: rgba(202,194,194,0.61);
+    --epcc-surface-overlay: rgba(255, 255, 255, .95);
+    --epcc-border-light: rgba(245, 245, 245, .8);
+    --epcc-border-light-soft: rgba(245, 245, 245, .6);
+    --epcc-border-dark: rgba(148,155,153,.8);
+    --epcc-border-dark-soft: rgba(148,155,153,.6);
+    --epcc-border-panel: grey;
+    --epcc-input-border: #000000;
+    --epcc-shadow: rgba(0, 0, 0, 0.6);
+    --epcc-success: #48ffaa;
+    --epcc-danger: #f41010;
+}
+
+[data-theme="dark"] {
+    --epcc-body-bg: #0f1114;
+    --epcc-text: #868f96;
+    --epcc-text-strong: #eef2f4;
+    --epcc-text-inverse: #ffffff;
+    --epcc-accent: #f598c6;
+    --epcc-accent-bg: #b41b5c;
+    --epcc-surface: rgba(22, 26, 30, 0.85);
+    --epcc-surface-strong: rgba(28, 33, 38, 0.9);
+    --epcc-surface-hover: rgba(40, 46, 54, 0.9);
+    --epcc-surface-solid: #1a1f24;
+    --epcc-surface-panel: rgba(26, 31, 36, 0.85);
+    --epcc-surface-muted: rgba(71, 58, 66, 0.7);
+    --epcc-surface-overlay: rgba(20, 24, 28, 0.95);
+    --epcc-border-light: rgba(255, 255, 255, 0.08);
+    --epcc-border-light-soft: rgba(255, 255, 255, 0.05);
+    --epcc-border-dark: rgba(0, 0, 0, 0.6);
+    --epcc-border-dark-soft: rgba(0, 0, 0, 0.4);
+    --epcc-border-panel: rgba(255, 255, 255, 0.18);
+    --epcc-input-border: rgba(255, 255, 255, 0.35);
+    --epcc-shadow: rgba(0, 0, 0, 0.7);
+    --epcc-success: #48ffaa;
+    --epcc-danger: #f41010;
+}
+
+html,
+body {
+    background-color: var(--epcc-body-bg);
+    color: var(--epcc-text);
+}
+
+#container {
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.vegas-overlay,
+.vegas-slide,
+.vegas-wrapper {
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.vegas-container {
+    min-height: 100%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.vegas-wrapper,
+.vegas-overlay {
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+input,
+select,
+textarea {
+    color: var(--epcc-text);
+}
+
+a {
+    color: var(--epcc-accent);
+}
+
+a:hover {
+    color: var(--epcc-accent);
+}
+
+.uk-modal-dialog,
+.uk-card-default {
+    background-color: var(--epcc-surface);
+    color: var(--epcc-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--epcc-text-strong);
+}
+
+.uk-article-title,
+.uk-article-meta,
+.uk-modal-dialog p,
+.uk-modal-dialog label,
+.uk-modal-dialog .uk-form-label,
+.uk-modal-dialog table {
+    color: var(--epcc-text);
+}
+
+.uk-article-meta a {
+    color: var(--epcc-accent);
+}
+
+.uk-modal-close-default {
+    color: var(--epcc-text);
+}
+
+.uk-input,
+.uk-select,
+.uk-textarea {
+    background-color: var(--epcc-surface-solid);
+    color: var(--epcc-text-strong);
+    border-color: var(--epcc-border-dark);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+select,
+textarea {
+    background-color: var(--epcc-surface-solid);
+    color: var(--epcc-text-strong);
+    border: 1px solid var(--epcc-border-dark);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--epcc-accent);
+    outline: none;
+}
+
+.uk-checkbox {
+    background-color: var(--epcc-surface-solid);
+    border-color: var(--epcc-border-dark);
+}
+
+.uk-checkbox:disabled {
+    background-color: var(--epcc-surface-muted);
+    border-color: var(--epcc-border-dark-soft);
+    opacity: 0.8;
+}
+
+.epcc-checkbox {
+    margin: 0.32em;
+    border: 2px solid var(--epcc-input-border);
+}
+
+.spezBox {
+    background: var(--epcc-surface-solid);
+    box-shadow: 0 0 6px var(--epcc-shadow);
+}
+
+.uk-button-primary {
+    background-color: var(--epcc-accent-bg);
+    border-color: var(--epcc-accent-bg);
+    color: var(--epcc-text-inverse);
+}
+
+.uk-button-primary:hover,
+.uk-button-primary:focus {
+    background-color: var(--epcc-accent);
+    border-color: var(--epcc-accent);
+    color: var(--epcc-text-inverse);
+}
+
+.uk-button-secondary,
+.uk-button-default {
+    background-color: var(--epcc-surface);
+    border-color: var(--epcc-border-dark);
+    color: var(--epcc-text);
+}
+
+.uk-button-secondary:hover,
+.uk-button-secondary:focus,
+.uk-button-default:hover,
+.uk-button-default:focus {
+    background-color: var(--epcc-surface-hover);
+    border-color: var(--epcc-border-dark);
+    color: var(--epcc-accent);
+}
+
+.ui-tooltip,
+.ui-tooltip.ui-widget,
+.ui-tooltip.ui-widget-content {
+    background: var(--epcc-surface-solid);
+    border: 1px solid var(--epcc-border-panel);
+    color: var(--epcc-text);
+    box-shadow: 0 2px 8px var(--epcc-shadow);
+    background-image: none;
+    outline: none;
+}
+
+.ui-tooltip-content {
+    color: var(--epcc-text);
+}

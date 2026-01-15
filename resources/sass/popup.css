@@ -12,24 +12,24 @@
     padding: 10px 25px;
 /*  Make the button oval shaped */
     border-radius: 40px;
-    color: hsl(200,10%,40%);
-    background-color: rgba(242, 242, 242, .8);
-    border-top: 1px solid rgba(245, 245, 245, .8);
-    border-bottom: 1px solid rgba(148,155,153,.8);
+    color: var(--epcc-text);
+    background-color: var(--epcc-surface);
+    border-top: 1px solid var(--epcc-border-light);
+    border-bottom: 1px solid var(--epcc-border-dark);
 }
 
 .popupInnerButton:hover {
-    color: rgb(186, 0, 80);
-    background-color: rgba(254, 254, 254, .85);
+    color: var(--epcc-accent);
+    background-color: var(--epcc-surface-hover);
 }
 
 /*===============POPUPS=====================*/
 
 /*Validation*/
 .valideIcone{
-	color: #48ffaa;
+	color: var(--epcc-success);
 }
 
 .invalidIcone{
-	color: #f41010;
+	color: var(--epcc-danger);
 }

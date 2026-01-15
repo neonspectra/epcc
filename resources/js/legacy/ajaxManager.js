@@ -109,10 +109,10 @@ $(document).ready(function(){
             ajax_helper(
                 returnArray,
                 function (response) {
-                    $(e.target).css("background-color", "#FEFEFE");
+                    $(e.target).css("background-color", "var(--epcc-surface-solid)");
                     if (response.error) {
                         treatMessageError(response);
-                        $("#" + response.aptError).css("background-color", "#BA0050");
+                        $("#" + response.aptError).css("background-color", "var(--epcc-accent-bg)");
                         $("#" + response.aptError).select();
                     }
                     else {
@@ -182,10 +182,10 @@ $(document).ready(function(){
             ajax_helper(
                 returnArray,
                 function (response) {
-                    $(e.target).css("background-color", "#FEFEFE");
+                    $(e.target).css("background-color", "var(--epcc-surface-solid)");
                     if (response.error) {
                         treatMessageError(response);
-                        $("#" + response.repError).css("background-color", "#BA0050");
+                        $("#" + response.repError).css("background-color", "var(--epcc-accent-bg)");
                         $("#" + response.repError).select();
                     }
                     else {
@@ -1130,7 +1130,7 @@ function changeSkill(node, after) {
             getCrePoint : 'get'
         },
         function(response){
-                $("[id="+skId+"]").css("background-color", "#FEFEFE");
+                $("[id="+skId+"]").css("background-color", "var(--epcc-surface-solid)");
                 $("#secondary").attr('src',after);
                 $("#secondary").load(after, function(){
                     $(focusOnSkill).select();
@@ -1176,4 +1176,3 @@ function getCookie(name)
 	var value = re.exec(document.cookie);
 	return (value != null) ? unescape(value[1]) : null;
 }
-

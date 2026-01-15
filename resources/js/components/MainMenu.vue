@@ -37,9 +37,10 @@
             New
         </button>
         <new-character-modal id="new-character-modal"></new-character-modal>
-        <button class="popupButton" uk-toggle="target: #about-modal">
-            About
+        <button class="popupButton" uk-toggle="target: #settings-modal">
+            Settings
         </button>
+        <settings-modal id="settings-modal"></settings-modal>
         <about id="about-modal"></about>
     </div>
 </template>

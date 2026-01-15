@@ -25,7 +25,7 @@ class HighLevelCreatorController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('creator', ['except' => ['store', 'update']]);
+        $this->middleware('creator', ['except' => ['store', 'update', 'destroy']]);
     }
 
     /**
@@ -134,6 +134,19 @@ class HighLevelCreatorController extends Controller
             creator()->activateMorph(creator()->character->morphs[0]);
         }
         creator()->adjustAll();
+        return response(['Success' => True]);
+    }
+
+    /**
+     * Clear the current session creator (and related session data).
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function destroy(Request $request)
+    {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return response(['Success' => True]);
     }
 

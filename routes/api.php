@@ -31,6 +31,7 @@ Route::get('/version', function() {
 Route::prefix('creator')->group(function () {
     Route::get('/', [HighLevelCreatorController::class, 'get']);
     Route::post('/', [HighLevelCreatorController::class, 'store']);
+    Route::delete('/', [HighLevelCreatorController::class, 'destroy']);
     Route::get('/validate', [HighLevelCreatorController::class, 'validateCharacter']);
     Route::get('/save', [HighLevelCreatorController::class, 'save']);
     Route::post('/load', [HighLevelCreatorController::class, 'update']);
