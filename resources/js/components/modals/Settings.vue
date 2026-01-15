@@ -26,11 +26,28 @@
                         <button type="button" class="popupInnerButton settings-action" uk-toggle="target: #about-modal">
                             About
                         </button>
-                        <button type="button" class="popupInnerButton closeButton settings-action" @click="clearSession">
+                        <button type="button" class="popupInnerButton closeButton settings-action" :uk-toggle="'target: #' + confirmId">
                             Clear Session
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div :id="confirmId" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical game-style epcc-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-text-center">
+                <h1><b><u>Clear Session?</u></b></h1>
+                <p>Clearing the current session will erase all currently loaded data.</p>
+                <div class="uk-margin-top settings-actions">
+                    <button type="button" class="popupInnerButton settings-action" @click="clearSessionConfirmed" uk-modal-close>
+                        Clear Session
+                    </button>
+                    <button type="button" class="popupInnerButton closeButton settings-action" uk-modal-close>
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -44,6 +61,11 @@
         name: "Settings",
         props: {
             id: String
+        },
+        computed: {
+            confirmId: function () {
+                return this.id ? `${this.id}-clear-confirm` : 'settings-clear-confirm';
+            }
         },
         data: function () {
             return {
@@ -86,7 +108,7 @@
                     window.applyBackgroundSettings();
                 }
             },
-            clearSession: function () {
+            clearSessionConfirmed: function () {
                 axios.delete(urls.creator)
                     .then(() => {
                         location.reload();
