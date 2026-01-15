@@ -2,7 +2,7 @@
     <div :id="id" class="uk-flex-top" v-on:toggle="toggled" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical game-style">
             <button class="uk-modal-close-default" type="button" uk-close></button>
-            <a href="https://github.com/neonspectra/epcc"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+            <a href="https://github.com/neonspectra/epcc"><img style="position: absolute; top: 0; left: 0; border: 0;" src="/img/forkme.png" alt="Fork me on GitHub"></a>
             <div class="uk-text-center">
                 <h1><b><u> About</u></b></h1>
                 <p>EPCC ({{versionName}})</p>
@@ -30,7 +30,7 @@
                 </p>
                 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
                     <img alt="Creative Commons License" style="border-width:0"
-                         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/>
+                         src="/img/creativecommons.png"/>
                 </a>
                 <p>
                     <small>
