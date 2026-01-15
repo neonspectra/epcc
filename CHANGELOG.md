@@ -1,7 +1,7 @@
 # 2.00 Argonaut (2026-01-15)
 This release is the first EPCC release under [neonspectra/epcc](https://github.com/neonspectra/epcc). This release focuses on long-overdue plumbing updates as well as automating testing and build processes for further new releases. 
 
-There are no new features or user-facing changes in this release, but this release cleans up almost a decade worth of accrued technical debt. While there shouldn't be any intentionally breaking changes and your old sheets will *probably still work*, it is advisable to use caution loading sheets from old versions of EPCC.
+There are no new features or user-facing changes, but this release cleans up almost a decade worth of accrued technical debt. While there shouldn't be any intentionally breaking changes and your old sheets will *probably still work*, it is advisable to use caution loading sheets from old versions of EPCC.
 
 CI Workflows (GitHub Actions):
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml) - Automated the test suite, as well as adding a few tests
