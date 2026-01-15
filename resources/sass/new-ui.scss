@@ -11,6 +11,13 @@
   @include game();
 }
 
+.epcc-modal-dialog {
+  width: calc(100% - 2rem);
+  max-width: 80ch;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 //This is meant to give a nice mostly opaque background with a game interface type double hard border (when using two of them).
 //Add 'uk-padding-remove' to the outer box to cut down on the extra space
 .game-box {
