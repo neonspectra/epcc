@@ -53,6 +53,7 @@ const app = createApp({
 });
 
 app.component('about', require('./components/modals/About').default);
+app.component('settings-modal', require('./components/modals/Settings').default);
 app.component('validation', require('./components/modals/ValidationCheck').default);
 app.component('load-dialog', require('./components/modals/LoadDialog').default);
 app.component('new-character-modal', require('./components/modals/NewCharacterModal').default);
