@@ -13,7 +13,7 @@ The original upstream EPCC repo is no longer maintained, so I forked it to bring
 * [Releases](https://github.com/neonspectra/epcc/releases)
 * [Issues](https://github.com/neonspectra/epcc/issues)
 * Websites that Host EPCC
-    * (None currently)
+    * [epcc.neosynth.net](https://epcc.neosynth.net)
 
 ## License
 This work is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License**.
@@ -24,7 +24,7 @@ You can read the full license description [here](https://github.com/neonspectra/
 See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list of everyone who has contributed to this project.
 
 ## Version
-The current version is [N/A]!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
+The current version is **2.0 (Argunaut)**!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
 
 ## EPCC Configuration
 There is a single configuration file for EPCC: `src/php/config.ini`.
