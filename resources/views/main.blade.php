@@ -27,6 +27,9 @@ declare(strict_types=1);
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <style>
+            html, body { background-color: #0f1114; color: #868f96; }
+        </style>
+        <style>
             <?php
             include public_path('css/vendor.css');
             include public_path('css/app.css');

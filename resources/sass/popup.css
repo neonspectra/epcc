@@ -27,9 +27,9 @@
 
 /*Validation*/
 .valideIcone{
-	color: #48ffaa;
+	color: var(--epcc-success);
 }
 
 .invalidIcone{
-	color: #f41010;
+	color: var(--epcc-danger);
 }

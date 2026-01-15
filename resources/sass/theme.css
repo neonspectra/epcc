@@ -19,6 +19,8 @@
     --epcc-border-panel: grey;
     --epcc-input-border: #000000;
     --epcc-shadow: rgba(0, 0, 0, 0.6);
+    --epcc-success: #48ffaa;
+    --epcc-danger: #f41010;
 }
 
 [data-theme="dark"] {
@@ -42,6 +44,8 @@
     --epcc-border-panel: rgba(255, 255, 255, 0.18);
     --epcc-input-border: rgba(255, 255, 255, 0.35);
     --epcc-shadow: rgba(0, 0, 0, 0.7);
+    --epcc-success: #48ffaa;
+    --epcc-danger: #f41010;
 }
 
 html,
