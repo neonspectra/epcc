@@ -7,6 +7,9 @@ require('jquery-ui/ui/widgets/tooltip');
 //UiKit
 require('uikit');
 
+//Theme
+require('./theme').init();
+
 //Background slide show
 require('./background').init();
 

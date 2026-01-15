@@ -7,7 +7,7 @@ input,
 select,
 textarea {
     height: 100%;
-    color: hsl(200,10%,40%);
+    color: var(--epcc-text);
 }
 
 body {
@@ -108,19 +108,19 @@ section.panel {
 #main-nav a{
 	display: block;
 	text-decoration: none;
-	color: hsl(200,10%,40%);
+	color: var(--epcc-text);
 }
 
 #main-nav a:hover{
-	color: rgb(186, 0, 80);
-	background-color: rgba(254, 254, 254, .85);
+	color: var(--epcc-accent);
+	background-color: var(--epcc-surface-hover);
 }
 
 #main-nav a.active{
-	color: white;
-	background-color: rgb(186, 0, 80);
-	border-top: 1px solid rgba(186, 0, 80, 1);
-	border-bottom: 1px solid rgba(186, 0, 80, 1);
+	color: var(--epcc-text-inverse);
+	background-color: var(--epcc-accent-bg);
+	border-top: 1px solid var(--epcc-accent-bg);
+	border-bottom: 1px solid var(--epcc-accent-bg);
 }
 
 /************SHARED************/
@@ -129,7 +129,7 @@ section.panel {
 	padding: 0;
 	margin: 0;
 	list-style-type: none;
-	background-color: rgba(242, 242, 242, .8);
+	background-color: var(--epcc-surface);
 	line-height:3em;
 }
 
@@ -138,25 +138,25 @@ section.panel {
 	margin: 0;
 	position: relative;
 	vertical-align: middle;
-	border-top: 1px solid rgba(245, 245, 245, .8);
-	border-bottom: 1px solid rgba(148,155,153,.8);
+	border-top: 1px solid var(--epcc-border-light);
+	border-bottom: 1px solid var(--epcc-border-dark);
 }
 
 .mainlist li:hover{
-	color: rgb(186, 0, 80);
-	background-color: rgba(254, 254, 254, .85);
+	color: var(--epcc-accent);
+	background-color: var(--epcc-surface-hover);
 }
 
 .listSection{
 	font-size: x-small;
-	color: rgb(186, 0, 80);
-	background-color: rgba(202,194,194,0.61);
+	color: var(--epcc-accent);
+	background-color: var(--epcc-surface-muted);
 }
 
 .foldingListSection{
 	font-size: x-small;
-	color: rgb(186, 0, 80);
-	background-color: rgba(202,194,194,0.61);
+	color: var(--epcc-accent);
+	background-color: var(--epcc-surface-muted);
 	padding-left: 1em;
 	display: block;
 	line-height:3em;
@@ -179,7 +179,7 @@ section.panel {
     display: inline-block;
     width: 3em;
     text-align: center;
-    border-right: 1px solid rgba(148,155,153,.6);
+    border-right: 1px solid var(--epcc-border-dark-soft);
     margin-right: 1em;
 }
 
@@ -204,7 +204,7 @@ a.active .btnhelp{
 }
 
 .iconPlusMinus:hover{
-	color: rgb(186, 0, 80);
+	color: var(--epcc-accent);
 }
 
 /* All Plus or Checked icons */
@@ -260,8 +260,8 @@ a.active .btnhelp{
 }
 
 .skills {
-	color: hsl(200,10%,40%);
-	background: rgba(242, 242, 242, .8);
+	color: var(--epcc-text);
+	background: var(--epcc-surface);
 	text-transform: uppercase;
 }
 
@@ -281,8 +281,8 @@ a.active .btnhelp{
 }
 
 .skills tbody tr:hover{
-	color: rgb(186, 0, 80);
-	background-color: rgba(254, 254, 254, .85);
+	color: var(--epcc-accent);
+	background-color: var(--epcc-surface-hover);
 }
 
 .skillTotal{
@@ -291,9 +291,9 @@ a.active .btnhelp{
 
 /* Popup box for skill Specialization */
 .spezBox {
-    background: #fff;
+    background: var(--epcc-surface-solid);
     border-radius: 12px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.6);
+    box-shadow: 0 0 6px var(--epcc-shadow);
     width: 150px;
     position: absolute;
     margin: 20px; padding: 10px;
@@ -332,22 +332,22 @@ a.active .btnhelp{
 	overflow: hidden;
 	line-height:3em;
 	text-decoration: none;
-	color: hsl(200,10%,40%);
+	color: var(--epcc-text);
 	text-transform: uppercase;
-	border-top: 1px solid rgba(245, 245, 245, .6);
-	border-bottom: 1px solid rgba(148,155,153,.6);
-	background-color: rgba(242, 242, 242, .8);
+	border-top: 1px solid var(--epcc-border-light-soft);
+	border-bottom: 1px solid var(--epcc-border-dark-soft);
+	background-color: var(--epcc-surface);
 }
 
 #morphs a:hover{
-	color: rgb(186, 0, 80);
-	background-color: rgba(254, 254, 254, .85);
+	color: var(--epcc-accent);
+	background-color: var(--epcc-surface-hover);
 }
 
 #morphs a.active{
-	color: white;
-	background-color: rgb(186, 0, 80);
-	border-top: 1px solid rgba(186, 0, 80, 1);
+	color: var(--epcc-text-inverse);
+	background-color: var(--epcc-accent-bg);
+	border-top: 1px solid var(--epcc-accent-bg);
 	width: 100%;
 }
 
@@ -392,8 +392,8 @@ a.active .btnhelp{
 	font-size: x-small;
 	text-transform:none;
 	text-align: justify;
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
 	padding-left: 1em;
 	display: block;
 	line-height:1em;
@@ -404,8 +404,8 @@ a.active .btnhelp{
 
 .bmChoice{
 	font-size: x-small;
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
 	padding-left: 1em;
 	display: block;
 	line-height:3em;
@@ -413,8 +413,8 @@ a.active .btnhelp{
 }
 .bmChoiceInput{
 	font-size: x-small;
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
 	padding-left: 1em;
 	display: block;
 	line-height:6em;
@@ -427,7 +427,9 @@ a.active .btnhelp{
 	height: 1.5em;
 	width: 20em;
 	position: absolute;
-	color: #000000;
+	color: var(--epcc-text-strong);
+	background-color: var(--epcc-surface-solid);
+	border: 1px solid var(--epcc-border-dark);
 }
 
 .bmChoiceSelect{
@@ -440,29 +442,32 @@ a.active .btnhelp{
 	height: 1.5em;
 	width: 20em;
 	position: absolute;
+	color: var(--epcc-text-strong);
+	background-color: var(--epcc-surface-solid);
+	border: 1px solid var(--epcc-border-dark);
 }
 
 .bmDesc{
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
-	border-top: 1px solid rgba(245, 245, 245, .8);
-	border-bottom: 1px solid rgba(148,155,153,.8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
+	border-top: 1px solid var(--epcc-border-light);
+	border-bottom: 1px solid var(--epcc-border-dark);
 	padding: 1em;
 	text-transform:none;
 	line-height:1em;
 }
 
 .bmMultiSelected{
-	color: rgb(186, 0, 80);
-    background: rgba(242, 242, 242, .8);
+	color: var(--epcc-accent);
+    background: var(--epcc-surface);
 }
 
 #tertiary_infos{
 	visibility: hidden;
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
-	border-top: 1px solid rgba(245, 245, 245, .8);
-	border-bottom: 1px solid rgba(148,155,153,.8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
+	border-top: 1px solid var(--epcc-border-light);
+	border-bottom: 1px solid var(--epcc-border-dark);
 	padding: 1em;
 }
 
@@ -488,16 +493,16 @@ a.active .btnhelp{
 
 #quaternary_infos{
 	visibility: hidden;
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
-	border-top: 1px solid rgba(245, 245, 245, .8);
-	border-bottom: 1px solid rgba(148,155,153,.8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
+	border-top: 1px solid var(--epcc-border-light);
+	border-bottom: 1px solid var(--epcc-border-dark);
 	padding: 1em;
 }
 
 .listSectionClose{
 	font-size: xx-small;
-	background-color: rgba(202,194,194,0.61);
+	background-color: var(--epcc-surface-muted);
 	padding-left: 1em;
 	display: block;
 	line-height:1em;
@@ -506,8 +511,8 @@ a.active .btnhelp{
 
 .bmChoice{
 	font-size: x-small;
-	color: hsl(200,10%,40%);
-	background-color: rgba(242, 242, 242, .8);
+	color: var(--epcc-text);
+	background-color: var(--epcc-surface);
 	padding-left: 1em;
 	display: block;
 	line-height:3em;
@@ -515,8 +520,8 @@ a.active .btnhelp{
 }
 
 .bmMultiSelected{
-	color: rgb(186, 0, 80);
-    background: rgba(242, 242, 242, .8);
+	color: var(--epcc-accent);
+    background: var(--epcc-surface);
 }
 
 /*messages*/
@@ -526,9 +531,9 @@ a.active .btnhelp{
 	right: 50%;
 	transform: translate(50%,0);
 	margin:0;
-	background-color: rgba(255, 255, 255, .95);
+	background-color: var(--epcc-surface-overlay);
 	font-size:1.25em;
-	color: hsl(200,10%,40%);
+	color: var(--epcc-text);
 	text-align: center;
 	vertical-align: middle;
 	display: none;
@@ -541,7 +546,7 @@ a.active .btnhelp{
 }
 
 .rest{
-	color: rgb(186, 0, 80);
+	color: var(--epcc-accent);
 	left: 5em;
 }
 
@@ -562,13 +567,13 @@ a.active .btnhelp{
 }
 
 .descriptionTitle{
-    color: rgb(186, 0, 80);
-    background-color: rgba(242, 242, 242, .8);
+    color: var(--epcc-accent);
+    background-color: var(--epcc-surface);
     padding-left: 1em;
     display: block;
     line-height:3em;
     padding-right: 1em;
-    border-top: 1px solid rgba(245, 245, 245, .8);
-    border-bottom: 1px solid rgba(148,155,153,.8);
+    border-top: 1px solid var(--epcc-border-light);
+    border-bottom: 1px solid var(--epcc-border-dark);
     text-transform: uppercase;
 }

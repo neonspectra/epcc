@@ -10,7 +10,7 @@
                     <div>
                         <label class="uk-form-label" for="creationMode">Continue in creation mode?</label>
                         <div class="uk-form-controls">
-                            <input class="uk-checkbox" type="checkbox" id="creationMode" style="margin: 0.32em; border: 2px solid black" v-model="creationMode">
+                            <input class="uk-checkbox epcc-checkbox" type="checkbox" id="creationMode" v-model="creationMode">
                         </div>
                     </div>
                     <div v-if="!creationMode">

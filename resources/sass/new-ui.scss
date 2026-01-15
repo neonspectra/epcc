@@ -3,7 +3,7 @@
 //They are meant to be a mixture between usable, and the cool UIs seen in video games.
 @mixin game() {
   box-sizing: border-box;
-  border: 2px solid grey;
+  border: 2px solid var(--epcc-border-panel);
   border-radius: 1.5em;
 }
 
@@ -40,7 +40,7 @@
   /* This is needed for when the min-height property is triggered */
   margin-bottom: var(--margin);
   padding: 0.5em;
-  background: rgba(211, 211, 211, 0.8);
+  background: var(--epcc-surface-panel);
 
   //Modified game-box to accommodate the interface elements (navbar, etc.)
   .outer-box {
@@ -59,7 +59,7 @@
   transform: translate(50%,-50%);
 
   z-index: 9000; /* This should be on top of everything else */
-  background-color: #ffffff;
+  background-color: var(--epcc-surface-solid);
   border-radius: 10px;
 
   background-image: url('../assets/img/ajax-loader.gif');

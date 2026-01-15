@@ -7,6 +7,14 @@
                 <form class="uk-form-horizontal settings-form">
                     <div class="settings-row settings-grid">
                         <div class="settings-label">
+                            <label class="uk-form-label" for="darkMode">Dark theme</label>
+                        </div>
+                        <div class="settings-control">
+                            <input class="uk-checkbox" type="checkbox" id="darkMode" v-model="darkModeEnabled" @change="applySettings">
+                        </div>
+                    </div>
+                    <div class="settings-row settings-grid">
+                        <div class="settings-label">
                             <label class="uk-form-label" for="backgroundEnabled">Background images</label>
                         </div>
                         <div class="settings-control">
@@ -69,6 +77,7 @@
         },
         data: function () {
             return {
+                darkModeEnabled: true,
                 backgroundEnabled: true,
                 remoteBackgroundsEnabled: true,
                 remoteImagesHelp: 'Remote images are larger and may use more data.',
@@ -83,8 +92,20 @@
             loadSettings: function () {
                 const isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
                 const remoteDefault = !isMobile;
+                this.darkModeEnabled = this.readThemeSetting();
                 this.backgroundEnabled = this.readBoolSetting('epcc.background.enabled', true);
                 this.remoteBackgroundsEnabled = this.readBoolSetting('epcc.background.remoteEnabled', remoteDefault);
+            },
+            readThemeSetting: function () {
+                try {
+                    const value = localStorage.getItem('epcc.theme.mode');
+                    if (value === null) {
+                        return true;
+                    }
+                    return value !== 'light';
+                } catch (error) {
+                    return true;
+                }
             },
             readBoolSetting: function (key, fallback) {
                 try {
@@ -99,10 +120,14 @@
             },
             applySettings: function () {
                 try {
+                    localStorage.setItem('epcc.theme.mode', this.darkModeEnabled ? 'dark' : 'light');
                     localStorage.setItem('epcc.background.enabled', this.backgroundEnabled ? 'true' : 'false');
                     localStorage.setItem('epcc.background.remoteEnabled', this.remoteBackgroundsEnabled ? 'true' : 'false');
                 } catch (error) {
                     console.log('Unable to persist settings');
+                }
+                if (window.applyThemeSettings) {
+                    window.applyThemeSettings();
                 }
                 if (window.applyBackgroundSettings) {
                     window.applyBackgroundSettings();
