@@ -7,10 +7,10 @@
 
 #mainMenu{
     width: 6.2em;   /*Same as .popupButton, but with a little extra for the 1px margin .popupButton has*/
-    position: absolute;
+    position: fixed;
     right: 0px;
     bottom: 0px;
-    z-index: 3;
+    z-index: 5;
 }
 
 .popupButton{

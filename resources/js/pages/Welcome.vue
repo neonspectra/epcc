@@ -13,7 +13,7 @@
         <div class="uk-card uk-card-body uk-card-default uk-width-1-3@m uk-text-center game-style">
             <h3 class="uk-card title">Choose!</h3>
             <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #new-character-modal">New Character</button>
-            <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #load-modal">Continue?</button>
+            <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #load-modal">Continue?</button>
             <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" uk-toggle="target: #settings-modal">Settings</button>
             <new-character-modal id="new-character-modal"></new-character-modal>
             <load-dialog id="load-modal"></load-dialog>

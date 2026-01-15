@@ -182,9 +182,10 @@
 .settings-label .btnhelp {
     float: none;
     padding-right: 0;
-    opacity: 0.4;
+    opacity: 0.9;
     margin-left: 0;
     line-height: 1;
+    color: var(--epcc-text);
 }
 
 .settings-control {
