@@ -167,6 +167,12 @@ textarea:focus {
     border-color: var(--epcc-border-dark);
 }
 
+.uk-checkbox:disabled {
+    background-color: var(--epcc-surface-muted);
+    border-color: var(--epcc-border-dark-soft);
+    opacity: 0.8;
+}
+
 .epcc-checkbox {
     margin: 0.32em;
     border: 2px solid var(--epcc-input-border);
