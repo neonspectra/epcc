@@ -30,8 +30,8 @@
                     This tool allows you to create and export character sheets for use with the <a href="https://posthuman.shop/products/eclipse-phase-first-edition-pdf">Eclipse Phase First Edition (1E)</a> tabletop roleplaying game.
                 </p>
                 <p>
-                    This website is not endorsed by or affiliated with <a href="https://posthumanstudios.com/">Posthuman Studios</a> in any way. 
-		    If you enjoy Eclipse Phase, please consider <a href="https://posthuman.shop/"supporting them</a>.
+                    This website is not endorsed by or affiliated with <a href="https://posthumanstudios.com/">Posthuman Studios</a> in any way.
+                    If you enjoy Eclipse Phase, please consider <a href="https://posthuman.shop/">supporting them</a>.
                 </p>
             </div>
         </div>
