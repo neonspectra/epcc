@@ -12,10 +12,16 @@
 }
 
 .epcc-modal-dialog {
-  width: calc(100% - 2rem);
-  max-width: 80ch;
+  width: 70ch;
+  max-width: calc(100% - 2rem);
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .epcc-modal-dialog {
+    width: calc(100% - 2rem);
+  }
 }
 
 //This is meant to give a nice mostly opaque background with a game interface type double hard border (when using two of them).
