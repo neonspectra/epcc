@@ -24,7 +24,7 @@ You can read the full license description [here](https://github.com/neonspectra/
 See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list of everyone who has contributed to this project.
 
 ## Version
-The current version is **2.0 (Argunaut)**!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
+The current version is **2.00 (Argunaut)**!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
 
 ## EPCC Configuration
 There is a single configuration file for EPCC: `src/php/config.ini`.
