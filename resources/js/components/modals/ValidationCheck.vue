@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" class="uk-flex-top" v-on:toggle="toggled" uk-modal>
+    <div :id="id" class="uk-flex-top" v-on:beforeshow="fetchValidation" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical game-style" style="min-width: 80ch">
             <button class="uk-modal-close-default" type="button" uk-close></button>
             <div class="uk-text-center">
@@ -39,28 +39,22 @@
         },
         data: function () {return{
             isValid: false,
-            validators: {
-                // name: '',
-                // isValid: false,
-                // errorMessage: ''
-            }
+            validators: []
         }},
         methods: {
-            // This happens whenever the Modal is shown/hidden (via UiKit)
-            toggled: function (event) {
-                //This is run before uk-open is applied, so the absence means shown
-                if(!this.$el.classList.contains('uk-open')) {
+            fetchValidation: function () {
+                if (this.$ga && this.$ga.page) {
                     this.$ga.page('/validate');
-                    axios.get(urls.validate)
-                        .then(response => {
-                            this.isValid = response.data.isValid;
-                            this.validators = response.data.validators;
-                        })
-                        .catch(error => {
-                            console.log('Error Validating data');
-                            console.log(error)
-                        });
                 }
+                axios.get(urls.validate)
+                    .then(response => {
+                        this.isValid = response.data.isValid;
+                        this.validators = Object.values(response.data.validators || {});
+                    })
+                    .catch(error => {
+                        console.log('Error Validating data');
+                        console.log(error)
+                    });
             }
         }
     }
