@@ -1,12 +1,44 @@
 <details>
   <summary><b>Version Nomenclature</b></summary>
-Following the release of 2.00 Argonaut, EPCC now uses a consistent naming convention for version numbering that prioritises inter-version character sheet compatibility:
-- The version EPCC version number must be a float number. It must always increase with the release of new versions.
-- Any change that DOES impact character sheet compability will increment the integer component (ie, number to the left of the decimal point) of the version number.
-    - Incrementing this number will result in a new version codename assigned (which may or may not be alphabetical).
-- Any change that DOES NOT impact character sheet compability will increment the decimal component (ie, number to the right of the decimal point) of the version number.
-    - Generally, the minor version number has two digits, giving up to 99 versions before we end up in an awkward situation if we want to keep the version a float without rolling over.
-    - In the event that we for some reason were to get over 99 releases in a minor version, we will start incrementing to the right. IE, the next minor version after `X.99` would be `X.991` and so on. I don't expect this to ever happen.
+  <p>
+    Following the release of 2.00 Argonaut, EPCC now uses a consistent naming convention
+    for version numbering that prioritises inter-version character sheet compatibility:
+  </p>
+  <ul>
+    <li>
+      The EPCC version number must be a float number. It must always increase with the
+      release of new versions.
+    </li>
+    <li>
+      Any change that <strong>does</strong> impact character sheet compatibility will
+      increment the integer component (i.e., the number to the left of the decimal point)
+      of the version number.
+      <ul>
+        <li>
+          Incrementing this number will result in a new version codename assigned
+          (which may or may not be alphabetical).
+        </li>
+      </ul>
+    </li>
+    <li>
+      Any change that <strong>does not</strong> impact character sheet compatibility will
+      increment the decimal component (i.e., the number to the right of the decimal point)
+      of the version number.
+      <ul>
+        <li>
+          Generally, the minor version number has two digits, giving up to 99 versions
+          before we end up in an awkward situation if we want to keep the version a float
+          without rolling over.
+        </li>
+        <li>
+          In the event that we for some reason were to get over 99 releases in a minor
+          version, we will start incrementing to the right. For example, the next minor
+          version after <code>X.99</code> would be <code>X.991</code> and so on. I don't
+          expect this to ever happen.
+        </li>
+      </ul>
+    </li>
+  </ul>
 </details>
 
 # 2.01 Argonaut (2026-01-16)
