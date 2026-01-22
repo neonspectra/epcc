@@ -1,6 +1,9 @@
 <p align="center">
+<a href="https://github.com/neonspectra/epcc">
     <img src="logo/epcc-white.png" alt="EPCC Logo" width="150">
+</a>
 </p>
+
 
 # EPCC – Eclipse Phase 1E Character Creator
 
