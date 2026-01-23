@@ -1,3 +1,10 @@
+<p align="center">
+<a href="https://github.com/neonspectra/epcc">
+    <img src="logo/epcc-white.png" alt="EPCC Logo" width="150">
+</a>
+</p>
+
+
 # EPCC – Eclipse Phase 1E Character Creator
 
 This repo is a fork of the [original web-based character creator application](https://github.com/Eclipse-Phase-Unofficial/ep-character-creator) for the [Eclipse Phase First Edition (1E)](https://posthuman.shop/products/eclipse-phase-first-edition-pdf) role-playing game, because I prefer Eclipse Phase 1E over the newer Second Edition. 
