@@ -15,6 +15,9 @@ php artisan test
 
 - `tests/Feature/NewCharacterSmokeTest.php`
   - Verifies the "Begin!" flow by exercising `POST /api/creator/` and ensuring a creator session is created.
+- `tests/Feature/HighLevelCreatorControllerTest.php`
+  - Exercises save, load, validation, and creator API behavior.
+  - Asserts exact canonical save metadata and verifies that nightly display metadata cannot replace the numeric save compatibility version or exporter commit.
 
 ### Unit smoke tests
 

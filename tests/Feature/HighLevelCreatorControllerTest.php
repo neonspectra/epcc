@@ -30,7 +30,7 @@ class HighLevelCreatorControllerTest extends TestCase
         return $saves;
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $response = $this->get('/api/creator/save');
         $response->assertStatus(200);
@@ -38,13 +38,34 @@ class HighLevelCreatorControllerTest extends TestCase
         $actual = $this->normalizeSavePack(json_decode($response->getContent(), true));
         $expected = $this->normalizeSavePack(json_decode(file_get_contents(__DIR__ . '/HighLevelCreatorController/save.json'), true));
 
-        foreach (['versionName', 'versionNumber', 'versionCommit'] as $key) {
-            if (array_key_exists($key, $actual)) {
-                $expected[$key] = $actual[$key];
-            }
-        }
-
         $this->assertEquals($expected, $actual);
+        $this->assertSame('Argonaut', $actual['versionName']);
+        $this->assertSame(2.02, $actual['versionNumber']);
+        $this->assertSame('na', $actual['versionCommit']);
+    }
+
+    public function testNightlyDisplayMetadataDoesNotLeakIntoSaveMetadata(): void
+    {
+        config([
+            'epcc.versionName' => 'Argonaut',
+            'epcc.versionNumber' => 2.02,
+            'epcc.buildCommit' => '0123456789abcdef',
+            'epcc.displayVersionName' => 'nightly',
+            'epcc.displayVersion' => 'fedcba9876543210',
+            'epcc.displayCommit' => 'fedcba9876543210',
+        ]);
+
+        $this->get('/api/version')
+            ->assertOk()
+            ->assertJsonPath('versionName', 'nightly')
+            ->assertJsonPath('version', 'fedcba9876543210')
+            ->assertJsonPath('commit', 'fedcba9876543210');
+
+        $this->get('/api/creator/save')
+            ->assertOk()
+            ->assertJsonPath('versionName', 'Argonaut')
+            ->assertJsonPath('versionNumber', 2.02)
+            ->assertJsonPath('versionCommit', '0123456789abcdef');
     }
 
     private function normalizeSavePack($data)
@@ -81,10 +102,15 @@ class HighLevelCreatorControllerTest extends TestCase
      * TODO:  Maybe more tests to make sure it succeeded (Perhaps check the values)
      * @dataProvider saveProvider
      */
-    public function testUpdate(array $saveJson)
+    public function testUpdate(array $saveJson): void
     {
         $response = $this->postJson('/api/creator/load', ['file' => $saveJson, 'creationMode' => true]);
-        $response->assertStatus(200);
+
+        $response
+            ->assertOk()
+            ->assertJson(['Success' => true])
+            ->assertJsonMissing(['Errors' => ['Incompatible file version!']]);
+        $this->assertInstanceOf(EPCharacterCreator::class, session()->get('cc'));
     }
 
     public function testValidateCharacter()

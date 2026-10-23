@@ -46,9 +46,10 @@ This repo is a Laravel + Vue web app (Eclipse Phase Character Creator) with a Do
   - Load: `POST /api/creator/load`  
   - Export: `GET /export/pdf`, `GET /export/txt` (web routes, require a creator session)
 
-- **Version display**
-  - `GET /api/version` returns display version info (name/number/commit/date).
-  - Defaults are “NIGHTLY / 0.0 / na” locally unless CI injects values via build args.
+- **Version metadata**
+  - `GET /api/version` returns display/build identity (name/number/commit/date).
+  - Exported saves use canonical compatibility identity from `EPCC_VERSION_NAME` / `EPCC_VERSION_NUMBER` plus `EPCC_BUILD_COMMIT`.
+  - Source and image defaults are `Argonaut` / numeric `2.02`; nightly CI changes only the display identity to `nightly` / commit SHA.
 
 ## Style & Naming Conventions
 
@@ -82,10 +83,11 @@ sudo docker run --rm -v "$PWD:/app" -w /app composer:2 sh -lc \
 
 ### Docker Image Build + Smoke Checks
 ```bash
-sudo docker build -t epcc .
+sudo docker build --pull -t epcc .
 sudo docker run --rm -d -p 8080:80 --name epcc_test epcc
 curl -fsS http://localhost:8080/ | head -n 5
 curl -fsS http://localhost:8080/api/version
+sudo docker exec epcc_test php -r 'exit(version_compare(PHP_VERSION, "8.4.27", ">=") ? 0 : 1);'
 sudo docker stop epcc_test
 ```
 
@@ -100,7 +102,7 @@ Exports require a creator session. Use PHP to seed it:
 sudo docker run --rm -v "$PWD:/app" -w /app composer:2 sh -lc \
   "cp testing.env .env && composer install --no-interaction && \
    php artisan tinker --execute=\"session()->put('cc', new App\\Creator\\EPCharacterCreator(1000)); \
-   echo json_encode(json_decode(app(App\\Http\\Controllers\\HighLevelCreatorController::class)->save()->getContent(), true)['versionCommit']);\""
+   echo json_encode(array_intersect_key(json_decode(app(App\\Http\\Controllers\\HighLevelCreatorController::class)->save()->getContent(), true), array_flip(['versionName', 'versionNumber', 'versionCommit'])));\""
 ```
 
 ## Feature Test Loop (No Browser Required)
@@ -130,18 +132,20 @@ If a UI change cannot be fully validated without a browser, note that clearly an
 
 - **Creator session**: Many routes require an active `creator()` session. Tests or CLI checks must seed the session.
 - **`/api/creator/save`**: Requires a creator session or returns 401.
-- **Metadata drift**: Version info is injected at build time in CI; tests should not hardcode display metadata.
+- **Metadata separation**: Tests should assert canonical save metadata exactly. Nightly display metadata may vary independently and must never replace the numeric save version.
 - **Assets**: Remote asset URLs may fail due to CSP/cross-origin. Prefer local `public/img/` assets.
 - **Nginx + PHP**: The Docker healthcheck hits `/` and requires nginx + php-fpm running together.
 
 ## CI/Release Workflows
 
-- **PR tests**: `.github/workflows/ci.yml` runs tests on PRs only.
-- **Nightly**: `.github/workflows/nightly-image.yml` builds per-arch images and creates multi-arch tags.
-- **Manual release**: `.github/workflows/release-image.yml` supports workflow_dispatch with version inputs.
+- **PR tests**: `.github/workflows/ci.yml` runs PHPUnit plus an amd64 fresh-base Docker build and runtime smoke test.
+- **Nightly**: `.github/workflows/nightly-image.yml` refreshes the floating base, builds per-architecture images, and creates multi-architecture `nightly` and commit tags.
+- **Manual release**: `.github/workflows/release-image.yml` validates source/input metadata, tests dependencies and the app, builds and verifies both architectures, promotes `vX.XX` and `latest`, and only then creates the matching Git tag and GitHub Release.
 
-These workflows inject version metadata via Docker build args:
-`EPCC_DISPLAY_VERSION`, `EPCC_DISPLAY_VERSION_NAME`, `EPCC_DISPLAY_COMMIT`, `EPCC_DISPLAY_RELEASE_DATE`.
+Image workflows inject canonical save metadata through `EPCC_VERSION_NUMBER`,
+`EPCC_VERSION_NAME`, and `EPCC_BUILD_COMMIT`. The separate display variables
+are `EPCC_DISPLAY_VERSION`, `EPCC_DISPLAY_VERSION_NAME`,
+`EPCC_DISPLAY_COMMIT`, and `EPCC_DISPLAY_RELEASE_DATE`.
 
 ---
 

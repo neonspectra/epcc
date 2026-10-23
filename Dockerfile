@@ -6,10 +6,14 @@ WORKDIR /app
 COPY package.json package-lock.json webpack.mix.js ./
 COPY resources ./resources
 COPY public ./public
-RUN npm install
+RUN npm ci
 RUN npm run production
 
 FROM php:8.4-fpm-alpine
+
+# PHP2Shell (CVE-2026-109618/CVE-2026-109619) is fixed in PHP 8.4.27.
+# Keep the 8.4 tag floating for patch updates, but fail closed if it regresses.
+RUN php -r 'exit(version_compare(PHP_VERSION, "8.4.27", ">=") ? 0 : 1);'
 
 EXPOSE 80
 CMD ["s6-svscan", "/etc/s6"]
@@ -52,11 +56,19 @@ RUN touch $DB_DATABASE && \
     sed -i 's/\\n/ /g' /var/www/html/database/database.sql && \
     sqlite3 --init /var/www/html/database/database.sql $DB_DATABASE
 
-# Optional display-only version info (used by /api/version)
-ARG EPCC_DISPLAY_VERSION
-ARG EPCC_DISPLAY_VERSION_NAME
+# Canonical release metadata is persisted in character saves. Display metadata
+# is separate so nightly builds can identify themselves without writing a Git
+# SHA into the numeric save compatibility field.
+ARG EPCC_VERSION_NUMBER=2.02
+ARG EPCC_VERSION_NAME=Argonaut
+ARG EPCC_BUILD_COMMIT=na
+ARG EPCC_DISPLAY_VERSION=2.02
+ARG EPCC_DISPLAY_VERSION_NAME=Argonaut
 ARG EPCC_DISPLAY_COMMIT
 ARG EPCC_DISPLAY_RELEASE_DATE
+ENV EPCC_VERSION_NUMBER=$EPCC_VERSION_NUMBER
+ENV EPCC_VERSION_NAME=$EPCC_VERSION_NAME
+ENV EPCC_BUILD_COMMIT=$EPCC_BUILD_COMMIT
 ENV EPCC_DISPLAY_VERSION=$EPCC_DISPLAY_VERSION
 ENV EPCC_DISPLAY_VERSION_NAME=$EPCC_DISPLAY_VERSION_NAME
 ENV EPCC_DISPLAY_COMMIT=$EPCC_DISPLAY_COMMIT

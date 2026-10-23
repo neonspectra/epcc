@@ -5,6 +5,9 @@ on:
     paths-ignore:
       - '**/*.md'
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -22,6 +25,11 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
+      - name: Audit locked dependencies
+        run: |
+          composer audit --locked
+          npm audit --package-lock-only --omit=dev
+
       - name: Prepare env file
         run: |
           if [ ! -f .env ]; then
@@ -30,3 +38,71 @@ jobs:
 
       - name: Run PHPUnit
         run: php artisan test
+
+  docker-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image from a fresh base
+        env:
+          BUILD_COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: |
+          docker build --pull \
+            --build-arg "EPCC_BUILD_COMMIT=$BUILD_COMMIT" \
+            --build-arg "EPCC_DISPLAY_COMMIT=$BUILD_COMMIT" \
+            --tag epcc:ci .
+
+      - name: Smoke test runtime and metadata
+        env:
+          BUILD_COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          container="epcc-ci-${GITHUB_RUN_ID}"
+          trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
+          docker run --detach --name "$container" --publish 127.0.0.1:8080:80 epcc:ci
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:8080/ >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              docker logs "$container"
+              exit 1
+            fi
+            sleep 2
+          done
+
+          docker exec "$container" php -r \
+            'exit(version_compare(PHP_VERSION, "8.4.27", ">=") ? 0 : 1);'
+
+          curl --fail --silent --show-error http://127.0.0.1:8080/api/version \
+            | jq --exit-status \
+              --arg commit "$BUILD_COMMIT" \
+              '.version == "2.02" and .versionName == "Argonaut" and .commit == $commit'
+
+          docker exec "$container" php -r '
+            require "vendor/autoload.php";
+            $app = require "bootstrap/app.php";
+            $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+            $save = (new App\Creator\EPCharacterCreator(1000))->getSavePack();
+            echo json_encode([
+                "versionName" => $save["versionName"],
+                "versionNumber" => $save["versionNumber"],
+                "versionCommit" => $save["versionCommit"],
+            ]);
+          ' | jq --exit-status \
+            --arg commit "$BUILD_COMMIT" \
+            '.versionName == "Argonaut" and .versionNumber == 2.02 and .versionCommit == $commit'
+
+          for attempt in $(seq 1 40); do
+            health="$(docker inspect --format '{{.State.Health.Status}}' "$container")"
+            [ "$health" = healthy ] && break
+            if [ "$health" = unhealthy ] || [ "$attempt" -eq 40 ]; then
+              docker inspect "$container"
+              docker logs "$container"
+              exit 1
+            fi
+            sleep 2
+          done
