@@ -32,24 +32,41 @@ You can read the full license description [here](https://github.com/neonspectra/
 See [here](https://github.com/neonspectra/epcc/blob/main/Authors.md) for a list of everyone who has contributed to this project.
 
 ## Version
-The current version is **2.01 (Argonaut)**!  See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md). 
+The current version is **2.02 (Argonaut)**. See the [Changelog](https://github.com/neonspectra/epcc/blob/main/CHANGELOG.md).
 
 ## EPCC Configuration
-There is a single configuration file for EPCC: `src/php/config.ini`.
-You will need to maintain a separate version of that file outside of this repository for your production environment.
+Application defaults live in [`config/`](config/), with EPCC-specific settings in
+[`config/epcc.php`](config/epcc.php). Laravel environment variables can override
+those defaults; pass a custom env file to Docker with `--env-file custom.env`.
 
-The rest of the information (Eclipse Phase content) is stored in the database. There is a full SQL dump of the database in
-[`database/database.sql`](database/database.sql).
+Release identity has two deliberately separate sets of variables:
+
+- `EPCC_VERSION_NAME` and `EPCC_VERSION_NUMBER` are canonical compatibility
+  metadata written into exported character saves (currently `Argonaut` and
+  numeric `2.02`).
+- `EPCC_BUILD_COMMIT` records the source commit in exported saves.
+- `EPCC_DISPLAY_VERSION`, `EPCC_DISPLAY_VERSION_NAME`,
+  `EPCC_DISPLAY_COMMIT`, and `EPCC_DISPLAY_RELEASE_DATE` describe the running
+  build through `GET /api/version`. Nightly display values may identify a Git
+  commit without changing the numeric save compatibility version.
+
+Eclipse Phase content is stored in the database. A full SQL dump is available
+at [`database/database.sql`](database/database.sql).
 
 ## Running via Docker
 Docker is the recommended, and only officially supported method or running this app.
 While the setup steps below can be used for development, it is **highly recommended** that deployment be done via Docker.
 
 ### Building from Source
-The following command builds an image of the applciation that is ready to be deployed. If your user is not in the `docker` group, you may need `sudo`.
+The following command builds a deployment-ready image and refreshes the
+floating PHP 8.4 base to its latest patch. If your user is not in the `docker`
+group, you may need `sudo`.
 ```bash
-docker image build --tag epcc .
+docker image build --pull --tag epcc .
 ```
+
+The build fails if the resolved PHP runtime is older than 8.4.27, the first PHP
+8.4 release that fixes CVE-2026-109618 and CVE-2026-109619.
 
 ### Obtaining from ghcr.io
 If you don't want to build your own docker image, you can pull it from this repo's GitHub Container Registry [here](https://github.com/neonspectra/epcc/pkgs/container/epcc).
@@ -81,7 +98,7 @@ sudo docker inspect --format='{{json .State.Health}}' epcc
 ##  Local Development and Testing
 You will need:
 
-* [php 8.4 or greater](https://php.net)
+* [PHP 8.4.27 or greater](https://php.net)
 * [node 24 LTS](https://nodejs.org/)
 * [composer 2.x](https://getcomposer.org/)
 * Either: [mySql 14.14 or greater](https://dev.mysql.com/downloads/)
@@ -127,5 +144,11 @@ WARNING:  If you use this feature, skip the `sed` step when creating the databas
 ### Running the test suite (PHPUnit)
 ```bash
 composer install
-vendor/bin/phpunit
+php artisan test
 ```
+
+Pull requests also build the Docker image from a refreshed base and smoke-test
+the PHP security floor, homepage, health check, `/api/version`, and exported
+save metadata. Stable releases are dispatched through the **Release Image**
+workflow, which tests, builds and verifies both architectures before publishing
+`vX.XX`/`latest` and creating the matching Git tag and GitHub Release.

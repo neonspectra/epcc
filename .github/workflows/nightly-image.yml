@@ -46,12 +46,16 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          pull: true
           push: true
           provenance: false
           tags: |
             ghcr.io/neonspectra/epcc:nightly-${{ matrix.arch }}
             ghcr.io/neonspectra/epcc:sha-${{ steps.version.outputs.sha_short }}-${{ matrix.arch }}
           build-args: |
+            EPCC_VERSION_NUMBER=2.02
+            EPCC_VERSION_NAME=Argonaut
+            EPCC_BUILD_COMMIT=${{ github.sha }}
             EPCC_DISPLAY_VERSION=${{ github.sha }}
             EPCC_DISPLAY_VERSION_NAME=nightly
             EPCC_DISPLAY_COMMIT=${{ github.sha }}
@@ -79,6 +83,6 @@ jobs:
             ghcr.io/neonspectra/epcc:nightly-amd64 \
             ghcr.io/neonspectra/epcc:nightly-arm64
           docker buildx imagetools create \
-            -t ghcr.io/neonspectra/epcc:sha-${SHA_SHORT} \
-            ghcr.io/neonspectra/epcc:sha-${SHA_SHORT}-amd64 \
-            ghcr.io/neonspectra/epcc:sha-${SHA_SHORT}-arm64
+            -t "ghcr.io/neonspectra/epcc:sha-${SHA_SHORT}" \
+            "ghcr.io/neonspectra/epcc:sha-${SHA_SHORT}-amd64" \
+            "ghcr.io/neonspectra/epcc:sha-${SHA_SHORT}-arm64"

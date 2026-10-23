@@ -4,20 +4,108 @@ on:
   workflow_dispatch:
     inputs:
       version_name:
-        description: "Release name (e.g., Gate Jump)"
+        description: "Release name (e.g., Argonaut)"
         required: true
         type: string
       version_number:
-        description: "Release number (e.g., 1.52)"
+        description: "Release number (e.g., 2.02)"
         required: true
         type: string
 
 permissions:
   contents: read
-  packages: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SOURCE_VERSION_NAME: Argonaut
+  SOURCE_VERSION_NUMBER: '2.02'
+  REGISTRY_IMAGE: ghcr.io/neonspectra/epcc
 
 jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    outputs:
+      version_name: ${{ steps.release.outputs.version_name }}
+      version_number: ${{ steps.release.outputs.version_number }}
+      pretty_tag: ${{ steps.release.outputs.pretty_tag }}
+      release_date: ${{ steps.release.outputs.release_date }}
+    steps:
+      - name: Checkout exact workflow commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Validate release inputs and source metadata
+        id: release
+        env:
+          VERSION_NAME: ${{ inputs.version_name }}
+          VERSION_NUMBER: ${{ inputs.version_number }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "Stable releases must be dispatched from main (got $GITHUB_REF)." >&2
+            exit 1
+          fi
+          if [[ ! "$VERSION_NUMBER" =~ ^[0-9]+\.[0-9]{2,}$ ]]; then
+            echo "Release number must look like 2.02." >&2
+            exit 1
+          fi
+          if [[ ! "$VERSION_NAME" =~ ^[A-Za-z][A-Za-z0-9_-]*(\ [A-Za-z0-9_-]+)*$ ]]; then
+            echo "Release name contains unsupported characters." >&2
+            exit 1
+          fi
+          if [ "$VERSION_NUMBER" != "$SOURCE_VERSION_NUMBER" ] || [ "$VERSION_NAME" != "$SOURCE_VERSION_NAME" ]; then
+            echo "Inputs do not match the release metadata in this workflow." >&2
+            exit 1
+          fi
+
+          grep -F "'versionName' => env('EPCC_VERSION_NAME', '$SOURCE_VERSION_NAME')" config/epcc.php
+          grep -F "'versionNumber' => (float) env('EPCC_VERSION_NUMBER', $SOURCE_VERSION_NUMBER)" config/epcc.php
+          grep -F "The current version is **$SOURCE_VERSION_NUMBER ($SOURCE_VERSION_NAME)**" README.md
+          grep -F "# $SOURCE_VERSION_NUMBER $SOURCE_VERSION_NAME" CHANGELOG.md
+
+          tag="v$VERSION_NUMBER"
+          direct_sha="$(git ls-remote --tags origin "refs/tags/$tag" | awk '{print $1}')"
+          peeled_sha="$(git ls-remote --tags origin "refs/tags/$tag^{}" | awk '{print $1}')"
+          existing_sha="${peeled_sha:-$direct_sha}"
+          if [ -n "$existing_sha" ] && [ "$existing_sha" != "$GITHUB_SHA" ]; then
+            echo "$tag already points to $existing_sha, not $GITHUB_SHA." >&2
+            exit 1
+          fi
+
+          {
+            echo "version_name=$VERSION_NAME"
+            echo "version_number=$VERSION_NUMBER"
+            echo "pretty_tag=$tag"
+            echo "release_date=$(date -u +%Y-%m-%d)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, sqlite3, pdo_sqlite, dom, curl, fileinfo
+          coverage: none
+
+      - name: Install and audit dependencies
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          composer audit --locked
+          npm audit --package-lock-only --omit=dev
+
+      - name: Run PHPUnit
+        run: |
+          cp testing.env .env
+          php artisan test
+
   build:
+    needs: validate-and-test
+    permissions:
+      contents: read
+      packages: write
     strategy:
       fail-fast: false
       matrix:
@@ -28,22 +116,10 @@ jobs:
             arch: arm64
     runs-on: ${{ matrix.runner }}
     steps:
-      - name: Checkout
+      - name: Checkout exact workflow commit
         uses: actions/checkout@v4
-
-      - name: Normalize tags
-        id: tags
-        run: |
-          VERSION_NUMBER="${{ inputs.version_number }}"
-          VERSION_NAME="${{ inputs.version_name }}"
-          COMMIT_SHA="$(git rev-parse HEAD)"
-          RELEASE_DATE="$(date -u +%Y-%m-%d)"
-          PRETTY_TAG="v${VERSION_NUMBER}"
-          echo "pretty_tag=${PRETTY_TAG}" >> "$GITHUB_OUTPUT"
-          echo "version_number=${VERSION_NUMBER}" >> "$GITHUB_OUTPUT"
-          echo "version_name=${VERSION_NAME}" >> "$GITHUB_OUTPUT"
-          echo "commit_sha=${COMMIT_SHA}" >> "$GITHUB_OUTPUT"
-          echo "release_date=${RELEASE_DATE}" >> "$GITHUB_OUTPUT"
+        with:
+          ref: ${{ github.sha }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -55,24 +131,29 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push image
+      - name: Build and push architecture candidate
         uses: docker/build-push-action@v6
         with:
           context: .
+          pull: true
           push: true
           provenance: false
-          tags: |
-            ghcr.io/neonspectra/epcc:${{ steps.tags.outputs.pretty_tag }}-${{ matrix.arch }}
-            ghcr.io/neonspectra/epcc:latest-${{ matrix.arch }}
+          tags: ${{ env.REGISTRY_IMAGE }}:candidate-${{ github.sha }}-${{ matrix.arch }}
           build-args: |
-            EPCC_DISPLAY_VERSION=${{ steps.tags.outputs.version_number }}
-            EPCC_DISPLAY_VERSION_NAME=${{ steps.tags.outputs.version_name }}
-            EPCC_DISPLAY_COMMIT=${{ steps.tags.outputs.commit_sha }}
-            EPCC_DISPLAY_RELEASE_DATE=${{ steps.tags.outputs.release_date }}
+            EPCC_VERSION_NUMBER=${{ needs.validate-and-test.outputs.version_number }}
+            EPCC_VERSION_NAME=${{ needs.validate-and-test.outputs.version_name }}
+            EPCC_BUILD_COMMIT=${{ github.sha }}
+            EPCC_DISPLAY_VERSION=${{ needs.validate-and-test.outputs.version_number }}
+            EPCC_DISPLAY_VERSION_NAME=${{ needs.validate-and-test.outputs.version_name }}
+            EPCC_DISPLAY_COMMIT=${{ github.sha }}
+            EPCC_DISPLAY_RELEASE_DATE=${{ needs.validate-and-test.outputs.release_date }}
 
-  manifest:
+  candidate-manifest:
+    needs: [validate-and-test, build]
     runs-on: ubuntu-latest
-    needs: build
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -84,15 +165,206 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create multi-arch tags
+      - name: Create multi-architecture candidate
+        env:
+          CANDIDATE_TAG: ${{ env.REGISTRY_IMAGE }}:candidate-${{ github.sha }}
         run: |
-          VERSION_NUMBER="${{ inputs.version_number }}"
-          PRETTY_TAG="v${VERSION_NUMBER}"
+          set -euo pipefail
           docker buildx imagetools create \
-            -t ghcr.io/neonspectra/epcc:${PRETTY_TAG} \
-            ghcr.io/neonspectra/epcc:${PRETTY_TAG}-amd64 \
-            ghcr.io/neonspectra/epcc:${PRETTY_TAG}-arm64
+            --tag "$CANDIDATE_TAG" \
+            "$CANDIDATE_TAG-amd64" \
+            "$CANDIDATE_TAG-arm64"
+          docker buildx imagetools inspect "$CANDIDATE_TAG"
+
+  verify:
+    needs: [validate-and-test, candidate-manifest]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            arch: amd64
+          - runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify candidate platforms, runtime, and metadata
+        env:
+          CANDIDATE_TAG: ${{ env.REGISTRY_IMAGE }}:candidate-${{ github.sha }}-${{ matrix.arch }}
+          VERSION_NAME: ${{ needs.validate-and-test.outputs.version_name }}
+          VERSION_NUMBER: ${{ needs.validate-and-test.outputs.version_number }}
+          BUILD_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          docker pull "$CANDIDATE_TAG"
+          container="epcc-release-${GITHUB_RUN_ID}"
+          trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
+          docker run --detach --name "$container" --publish 127.0.0.1:8080:80 "$CANDIDATE_TAG"
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:8080/ >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              docker logs "$container"
+              exit 1
+            fi
+            sleep 2
+          done
+
+          docker exec "$container" php -r \
+            'exit(version_compare(PHP_VERSION, "8.4.27", ">=") ? 0 : 1);'
+
+          curl --fail --silent --show-error http://127.0.0.1:8080/api/version \
+            | jq --exit-status \
+              --arg name "$VERSION_NAME" \
+              --arg number "$VERSION_NUMBER" \
+              --arg commit "$BUILD_COMMIT" \
+              '.version == $number and .versionName == $name and .commit == $commit'
+
+          docker exec "$container" php -r '
+            require "vendor/autoload.php";
+            $app = require "bootstrap/app.php";
+            $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+            $save = (new App\Creator\EPCharacterCreator(1000))->getSavePack();
+            echo json_encode([
+                "versionName" => $save["versionName"],
+                "versionNumber" => $save["versionNumber"],
+                "versionCommit" => $save["versionCommit"],
+            ]);
+          ' | jq --exit-status \
+            --arg name "$VERSION_NAME" \
+            --argjson number "$VERSION_NUMBER" \
+            --arg commit "$BUILD_COMMIT" \
+            '.versionName == $name and .versionNumber == $number and .versionCommit == $commit'
+
+          for attempt in $(seq 1 40); do
+            health="$(docker inspect --format '{{.State.Health.Status}}' "$container")"
+            [ "$health" = healthy ] && break
+            if [ "$health" = unhealthy ] || [ "$attempt" -eq 40 ]; then
+              docker inspect "$container"
+              docker logs "$container"
+              exit 1
+            fi
+            sleep 2
+          done
+
+  promote:
+    needs: [validate-and-test, verify]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout exact workflow commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Refuse to overwrite a release owned by another commit
+        env:
+          TAG: ${{ needs.validate-and-test.outputs.pretty_tag }}
+        run: |
+          set -euo pipefail
+          direct_sha="$(git ls-remote --tags origin "refs/tags/$TAG" | awk '{print $1}')"
+          peeled_sha="$(git ls-remote --tags origin "refs/tags/$TAG^{}" | awk '{print $1}')"
+          existing_sha="${peeled_sha:-$direct_sha}"
+          if [ -n "$existing_sha" ] && [ "$existing_sha" != "$GITHUB_SHA" ]; then
+            echo "$TAG already points to $existing_sha, not $GITHUB_SHA." >&2
+            exit 1
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish stable tags from verified candidate
+        env:
+          CANDIDATE_TAG: ${{ env.REGISTRY_IMAGE }}:candidate-${{ github.sha }}
+          VERSION_TAG: ${{ env.REGISTRY_IMAGE }}:${{ needs.validate-and-test.outputs.pretty_tag }}
+          LATEST_TAG: ${{ env.REGISTRY_IMAGE }}:latest
+        run: |
+          set -euo pipefail
           docker buildx imagetools create \
-            -t ghcr.io/neonspectra/epcc:latest \
-            ghcr.io/neonspectra/epcc:latest-amd64 \
-            ghcr.io/neonspectra/epcc:latest-arm64
+            --tag "$VERSION_TAG" \
+            --tag "$LATEST_TAG" \
+            "$CANDIDATE_TAG"
+
+          version_digest="$(docker buildx imagetools inspect "$VERSION_TAG" | awk '$1 == "Digest:" {print $2; exit}')"
+          latest_digest="$(docker buildx imagetools inspect "$LATEST_TAG" | awk '$1 == "Digest:" {print $2; exit}')"
+          [ "$version_digest" = "$latest_digest" ]
+          docker buildx imagetools inspect "$VERSION_TAG"
+
+  github-release:
+    needs: [validate-and-test, promote]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact workflow commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Create matching tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION_NAME: ${{ needs.validate-and-test.outputs.version_name }}
+          VERSION_NUMBER: ${{ needs.validate-and-test.outputs.version_number }}
+          RELEASE_DATE: ${{ needs.validate-and-test.outputs.release_date }}
+          TAG: ${{ needs.validate-and-test.outputs.pretty_tag }}
+        run: |
+          set -euo pipefail
+          direct_sha="$(git ls-remote --tags origin "refs/tags/$TAG" | awk '{print $1}')"
+          peeled_sha="$(git ls-remote --tags origin "refs/tags/$TAG^{}" | awk '{print $1}')"
+          existing_sha="${peeled_sha:-$direct_sha}"
+          if [ -n "$existing_sha" ] && [ "$existing_sha" != "$GITHUB_SHA" ]; then
+            echo "$TAG already points to $existing_sha, not $GITHUB_SHA." >&2
+            exit 1
+          fi
+          if [ -z "$existing_sha" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
+              --raw-field "ref=refs/tags/$TAG" \
+              --raw-field "sha=$GITHUB_SHA"
+          fi
+
+          python3 - <<'PY' >/tmp/release-notes.md
+          import os
+          from pathlib import Path
+
+          heading = f"# {os.environ['VERSION_NUMBER']} {os.environ['VERSION_NAME']} ("
+          lines = Path("CHANGELOG.md").read_text().splitlines()
+          start = next(i for i, line in enumerate(lines) if line.startswith(heading))
+          end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("# ")), len(lines))
+          print("\n".join(lines[start + 1:end]).strip())
+          PY
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "GitHub Release $TAG already exists at the verified commit; leaving it unchanged."
+          else
+            gh release create "$TAG" \
+              --verify-tag \
+              --target "$GITHUB_SHA" \
+              --title "$VERSION_NUMBER $VERSION_NAME ($RELEASE_DATE)" \
+              --notes-file /tmp/release-notes.md
+          fi

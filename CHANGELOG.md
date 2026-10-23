@@ -41,6 +41,16 @@
   </ul>
 </details>
 
+# 2.02 Argonaut (2026-10-23)
+This maintenance release updates the runtime and release process without changing character sheet compatibility.
+
+- Rebuilt on PHP 8.4.27 or newer to remediate the critical PHP2Shell vulnerabilities (CVE-2026-109618 and CVE-2026-109619).
+- Fixed exported character sheets incorrectly reporting the fallback `NIGHTLY` / `0.91` metadata. Saves now report Argonaut 2.02 and the exporter build commit.
+- Kept nightly display identity separate from the numeric version written into character saves.
+- Refreshed Composer and npm lockfiles within their existing version constraints.
+- Added container smoke tests and PHP-version checks to pull request CI.
+- Made the manual release workflow test and verify multi-architecture images before publishing `v2.02` and `latest`, then creating the matching Git tag and GitHub Release.
+
 # 2.01 Argonaut (2026-01-16)
 This release includes UI fixes as well as introduces a new dark mode (enabled by default).
 - Dark Mode 😎
@@ -58,7 +68,7 @@ There are no new features or user-facing changes, but this release cleans up alm
 CI Workflows (GitHub Actions):
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml) - Automated the test suite, as well as adding a few tests
 - [`.github/workflows/nightly-image.yml`](.github/workflows/nightly-image.yml) - Automated nightly builds to ghcr.io on new pushes to main. Builds are parallelised over AMD64 and ARM64 runners to create multiarch tagged images.
-- [`.github/workflows/nightly-image.yml`](.github/workflows/nightly-image.yml) - Manual release builds to ghcr.io with user input version details. Also multiarch.
+- [`.github/workflows/release-image.yml`](.github/workflows/release-image.yml) - Manual release builds to ghcr.io with user input version details. Also multiarch.
 
 Major EOL Frameworks Refactor:
 - Laravel 5.6 -> Laravel 12

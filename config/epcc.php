@@ -2,18 +2,18 @@
 
 use Carbon\Carbon as Carbon;
 
-//This replaces the old confi.ini file that the character creator was using before
-//TODO:  Some of the settings here probably belong somewhere else, like app
-//TODO:  Some of these should probably be loaded from the .env file
+// Canonical release metadata is written into saved character sheets. Display
+// metadata may differ for nightly builds, but must not change save compatibility.
 return [
-    'versionName' => env('EPCC_VERSION_NAME', "NIGHTLY"),
-    'releaseDate' => Carbon::parse("December 2018"),
-    'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 0.91),
+    'versionName' => env('EPCC_VERSION_NAME', 'Argonaut'),
+    'releaseDate' => Carbon::parse('October 2026'),
+    'versionNumber' => (float) env('EPCC_VERSION_NUMBER', 2.02),
     'versionNumberMin' => 0.91,
-    'displayVersionName' => (env('EPCC_DISPLAY_VERSION_NAME') ?: (env('EPCC_VERSION_NAME') ?: "NIGHTLY")),
-    'displayVersion' => (env('EPCC_DISPLAY_VERSION') ?: (env('EPCC_VERSION_NUMBER') ?: "0.0")),
-    'displayCommit' => (env('EPCC_DISPLAY_COMMIT') ?: 'na'),
-    'displayReleaseDate' => (env('EPCC_DISPLAY_RELEASE_DATE') ?: Carbon::now()->format('Y-m-d')),
+    'buildCommit' => env('EPCC_BUILD_COMMIT', 'na'),
+    'displayVersionName' => env('EPCC_DISPLAY_VERSION_NAME') ?: env('EPCC_VERSION_NAME', 'Argonaut'),
+    'displayVersion' => env('EPCC_DISPLAY_VERSION') ?: env('EPCC_VERSION_NUMBER', '2.02'),
+    'displayCommit' => env('EPCC_DISPLAY_COMMIT') ?: env('EPCC_BUILD_COMMIT', 'na'),
+    'displayReleaseDate' => env('EPCC_DISPLAY_RELEASE_DATE') ?: Carbon::now()->format('Y-m-d'),
     'googleAnalyticsId' => env('VITE_GOOGLE_ANALYTICS_ID', env('MIX_GOOGLE_ANALYTICS_ID', '')),
     //RulesValues
     'AptitudesPoint' => 105,
